@@ -1,4 +1,6 @@
-from Models import MoviesModel, Movie
+from typing import Optional
+
+from Models import MoviesModel, Movie, MediaDto
 
 movies_model = MoviesModel()
 
@@ -15,7 +17,7 @@ def test_get_movie_id():
 
 
 def test_get_movie_imdbID():
-    movie: Optional[Movie] = movies_model.get_movie_imdbID(imdbID="tt0067759")
+    movie: Optional[Movie] = movies_model.get_movie_imdbID(imdbID="tt0080684")
     print(movie)
 
 
@@ -26,27 +28,34 @@ def test_get_movies_search():
 
 
 def test_post_movie():
-    movie: Optional[Movie] = movies_model.post_movie(imdbID="tt0796366")
+    movie: Optional[MediaDto] = movies_model.post_movie(imdbID="tt0086190")
     print(movie)
 
 
 def test_movies_model():
-    print("{:*^30}")
-    greeting = "Testing Movies Model Class"
-    print("f{greeting:^30}")
+    intro = ""
+    print(f"{intro:*^30}")
+    greeting = "Testing Movies Model Class\n"
+    print(f"{greeting:^30}")
 
-    print("Testing get_movies")
+    print(f"{intro:_^30}")
+    print("Testing get_movies\n")
     test_get_movies()
 
-    print("Testing get_movie_id")
+    print(f"{intro:_^30}")
+    print("Testing get_movie_id\n")
     test_get_movie_id()
 
-    print("Testing get_movie_imdbIB")
+    print(f"{intro:_^30}")
+    print("Testing get_movie_imdbIB\n")
     test_get_movie_imdbID()
 
-    print("Testing get_movies_search")
+    print(f"{intro:_^30}")
+    print("Testing get_movies_search\n")
     test_get_movies_search()
 
-    print("Testing post_movie")
+    print(f"{intro:_^30}")
+    print("Testing post_movie\n")
     test_post_movie()
-    print("{:*^30}")
+
+    print(f"{intro:*^30}")

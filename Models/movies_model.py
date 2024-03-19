@@ -74,7 +74,7 @@ class MoviesModel:
         return None
 
     def get_movies_search(self, s: str, y: Optional[int] = None) -> list[MediaDto]:
-        url = f"http://localhost:{self.PORT}/api/Movies/?s={s}"
+        url = f"http://localhost:{self.PORT}/api/Movies/search/?s={s}"
         if y:
             url += f"&y={y}"
 
@@ -87,11 +87,10 @@ class MoviesModel:
         return []
 
     def post_movie(self, imdbID: str) -> Optional[Movie]:
-        url = f"http://localhost:{self.PORT}/api/Movies"
-        query = {"imdbID": imdbID}
+        url = f"http://localhost:{self.PORT}/api/Movies?imdbID={imdbID}"
 
-        response = requests.post(url, data=query)
-        if response.status_code == 200:
+        response = requests.post(url)
+        if response.status_code in {200, 201}:
             json_str = response.text
             json_obj = json.loads(json_str)
             return Movie(**json_obj)

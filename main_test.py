@@ -1,8 +1,8 @@
-from Tests import test_get_movies
+from Tests import test_movies_model
 
 
 def main():
-    test_get_movies()
+    test_movies_model()
 
 
 if __name__ == "__main__":
