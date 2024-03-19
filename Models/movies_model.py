@@ -3,9 +3,22 @@ import json
 
 PORT = 7237
 
+
 class Movie:
     """Class for the Movie Entity"""
-    def __init__(self, id: int, title: str, posterURL: str, rating: float, year: int, imdbID: str, time: int, genre: str, libraries):
+
+    def __init__(
+        self,
+        id: int,
+        title: str,
+        posterURL: str,
+        rating: float,
+        year: int,
+        imdbID: str,
+        time: int,
+        genre: str,
+        libraries,
+    ):
         self.id = id
         self.title = title
         self.poster_url = posterURL
@@ -18,8 +31,10 @@ class Movie:
     def __repr__(self) -> str:
         return f"Movie({self.id=}, {self.title=}, {self.rating=}, {self.time=} min, {self.imdbID=})"
 
+
 class MoviesModel:
     """Model Class for the Movie Entity"""
+
     # def __init__(self):
     #     ...
 
@@ -34,6 +49,3 @@ class MoviesModel:
             return [Movie(**obj) for obj in json_obj]
         else:
             return []
-
-
-    
