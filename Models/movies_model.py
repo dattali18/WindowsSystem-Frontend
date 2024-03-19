@@ -1,5 +1,8 @@
 import requests
 import json
+from typing import Optional
+
+from Models import MediaDto
 
 PORT = 5062
 
@@ -47,3 +50,50 @@ class MoviesModel:
             return [Movie(**obj) for obj in json_obj]
         else:
             return []
+
+    def get_movie_id(self, id: int) -> Optional[Movie]:
+        url = f"http://localhost:{self.PORT}/api/Movies/{id}"
+
+        response = requests.get(url)
+        if response.status_code == 200:
+            json_str = response.text
+            json_obj = json.loads(json_str)
+            return Movie(**json_obj)
+
+        return None
+
+    def get_movie_imdbID(self, imdbID: str) -> Optional[Movie]:
+        url = f"http://localhost:{self.PORT}/api/Movies/search/{imdbID}"
+
+        response = requests.get(url)
+        if response.status_code == 200:
+            json_str = response.text
+            json_obj = json.loads(json_str)
+            return Movie(**json_obj)
+
+        return None
+
+    def get_movies_search(self, s: str, y: Optional[int] = None) -> list[MediaDto]:
+        url = f"http://localhost:{self.PORT}/api/Movies/?s={s}"
+        if y:
+            url += f"&y={y}"
+
+        response = requests.get(url)
+        if response.status_code == 200:
+            json_str = response.text
+            json_obj = json.loads(json_str)
+            return [MediaDto(**obj) for obj in json_obj]
+
+        return []
+
+    def post_movie(self, imdbID: str) -> Optional[Movie]:
+        url = f"http://localhost:{self.PORT}/api/Movies"
+        query = {"imdbID": imdbID}
+
+        response = requests.post(url, data=query)
+        if response.status_code == 200:
+            json_str = response.text
+            json_obj = json.loads(json_str)
+            return Movie(**json_obj)
+
+        return None
