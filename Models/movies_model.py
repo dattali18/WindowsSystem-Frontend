@@ -17,7 +17,6 @@ class Movie:
         imdbID: str,
         time: int,
         genre: str,
-        libraries,
     ):
         self.id = id
         self.title = title
@@ -35,12 +34,11 @@ class Movie:
 class MoviesModel:
     """Model Class for the Movie Entity"""
 
-    # def __init__(self):
-    #     ...
+    def __init__(self, PORT: int = PORT):
+        self.PORT = PORT
 
     def get_movies(self) -> list[Movie]:
-        url = f"https://localhost:{PORT}/api/Movies"
-        # "https://localhost:7237/api/Movies"
+        url = f"https://localhost:{self.PORT}/api/Movies"
 
         response = requests.get(url, verify=False)
         if response.status_code == 200:
