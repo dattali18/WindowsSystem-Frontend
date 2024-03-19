@@ -1,7 +1,7 @@
 import requests
 import json
 
-PORT = 7237
+PORT = 5062
 
 
 class Movie:
@@ -38,9 +38,9 @@ class MoviesModel:
         self.PORT = PORT
 
     def get_movies(self) -> list[Movie]:
-        url = f"https://localhost:{self.PORT}/api/Movies"
+        url = f"http://localhost:{self.PORT}/api/Movies"
 
-        response = requests.get(url, verify=False)
+        response = requests.get(url)
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
