@@ -1,12 +1,12 @@
 from typing import Optional
 
-from Models import MoviesModel, Movie, MediaDto
+from Models import MoviesModel, MovieDto, MediaDto
 
 movies_model = MoviesModel()
 
 
 def test_get_movies() -> None:
-    movies: list[Movie] = movies_model.get_movies()
+    movies: list[MovieDto] = movies_model.get_movies()
     if not libraries:
         print("There was an error")
     else:
@@ -15,7 +15,7 @@ def test_get_movies() -> None:
 
 
 def test_get_movie_id(id: int = 1) -> None:
-    movie: Optional[Movie] = movies_model.get_movie_id(id=id)
+    movie: Optional[MovieDto] = movies_model.get_movie_id(id=id)
     if not libraries:
         print("There was an error")
     else:
@@ -23,7 +23,7 @@ def test_get_movie_id(id: int = 1) -> None:
 
 
 def test_get_movie_imdbID(imdbID: str = "tt0080684") -> None:
-    movie: Optional[Movie] = movies_model.get_movie_imdbID(imdbID=imdbID)
+    movie: Optional[MovieDto] = movies_model.get_movie_imdbID(imdbID=imdbID)
     if not libraries:
         print("There was an error")
     else:

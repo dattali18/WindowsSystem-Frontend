@@ -13,7 +13,7 @@ class MoviesModel:
     def __init__(self, PORT: int = PORT):
         self.PORT = PORT
 
-    def get_movies(self) -> Optional[list[Movie]]:
+    def get_movies(self) -> Optional[list[MovieDto]]:
         """
         GET - /api/Movies
         Returns:
@@ -29,7 +29,7 @@ class MoviesModel:
             return [Movie(**obj) for obj in json_obj]
         return None
 
-    def get_movie_id(self, id: int) -> Optional[Movie]:
+    def get_movie_id(self, id: int) -> Optional[MovieDto]:
         """
         GET - /api/Movies/{id}
         Args:
@@ -47,7 +47,7 @@ class MoviesModel:
             return Movie(**json_obj)
         return None
 
-    def get_movie_imdbID(self, imdbID: str) -> Optional[Movie]:
+    def get_movie_imdbID(self, imdbID: str) -> Optional[MovieDto]:
         """
         GET - /api/Movies/{imdbID}
         Args:
@@ -88,7 +88,7 @@ class MoviesModel:
             return [MediaDto(**obj) for obj in json_obj]
         return None
 
-    def post_movie(self, imdbID: str) -> Optional[Movie]:
+    def post_movie(self, imdbID: str) -> Optional[MovieDto]:
         """
         POST - /api/Movies/?imdbID=imdbID
         Args:

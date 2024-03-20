@@ -10,6 +10,9 @@ from PySide6.QtGui import QAction
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
 
+from Controllers import Frame1Controller
+from Models import LibrariesModel, MoviesModel
+
 from .frame_1 import Ui_Frame_1
 from .frame_2 import Ui_Frame_2
 
@@ -59,12 +62,14 @@ class MainWindow(QMainWindow):
         self.option_s1_selected()
 
     def option_s1_selected(self):
-        print("Option S1 Selected")
         frame = Frame_1()
         self.change_widget(frame)
 
+        self.frame1_controller = Frame1Controller(
+            LibrariesModel(), MoviesModel(), frame.m_ui
+        )
+
     def option_s2_selected(self):
-        print("Option S2 Selected")
         frame = Frame_2()
         self.change_widget(frame)
 

@@ -1,3 +1,5 @@
+from .media_dto import MediaDto
+
 class GetLibraryDto:
     """Data Transfer Object Class for the GetLibraryDto"""
 

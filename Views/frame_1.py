@@ -101,15 +101,15 @@ class Ui_Frame_1(object):
 
         self.horizontalLayout_3.addWidget(self.back_btn)
 
-        self.forword_btn = QPushButton(self.verticalLayoutWidget)
-        self.forword_btn.setObjectName("forword_btn")
-        self.forword_btn.setMaximumSize(QSize(32, 32))
+        self.forward_btn = QPushButton(self.verticalLayoutWidget)
+        self.forward_btn.setObjectName("forward_btn")
+        self.forward_btn.setMaximumSize(QSize(32, 32))
         icon1 = QIcon()
         icon1.addFile("icons/chevron.forward.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.forword_btn.setIcon(icon1)
-        self.forword_btn.setFlat(True)
+        self.forward_btn.setIcon(icon1)
+        self.forward_btn.setFlat(True)
 
-        self.horizontalLayout_3.addWidget(self.forword_btn)
+        self.horizontalLayout_3.addWidget(self.forward_btn)
 
         self.horizontalLayout_4.addLayout(self.horizontalLayout_3)
 
@@ -167,7 +167,7 @@ class Ui_Frame_1(object):
             QCoreApplication.translate("Frame_1", "Search Playlist", None)
         )
         self.back_btn.setText("")
-        self.forword_btn.setText("")
+        self.forward_btn.setText("")
         self.search_btn.setText(QCoreApplication.translate("Frame_1", "search", None))
         self.create_btn.setText(QCoreApplication.translate("Frame_1", "Create", None))
         self.update_btn.setText(QCoreApplication.translate("Frame_1", "Update", None))
