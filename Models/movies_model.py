@@ -31,7 +31,7 @@ class Movie:
         self.genre = genre
 
     def __repr__(self) -> str:
-        return f"Movie({self.id=}, {self.title=}, {self.rating=}, {self.time=} min, {self.imdbID=})"
+        return f"Movie(id={self.id}, title={self.title}, rating={self.rating}, time={self.time} min, imdbID={self.imdbID})"
 
 
 class MoviesModel:
@@ -41,6 +41,12 @@ class MoviesModel:
         self.PORT = PORT
 
     def get_movies(self) -> Optional[list[Movie]]:
+        """
+        GET - /api/Movies
+        Returns:
+            Optional[list[Movie]] - a list of all movies in the database in the Movie format
+            None if response.status_code == 404
+        """
         url = f"http://localhost:{self.PORT}/api/Movies"
 
         response = requests.get(url)
@@ -51,6 +57,14 @@ class MoviesModel:
         return None
 
     def get_movie_id(self, id: int) -> Optional[Movie]:
+        """
+        GET - /api/Movies/{id}
+        Args:
+            id: int - the id of the movie in the database
+        Returns:
+            Optional[Movie] - a movies in the database with the id=id in the Movie format
+            None if response.status_code == 404
+        """
         url = f"http://localhost:{self.PORT}/api/Movies/{id}"
 
         response = requests.get(url)
@@ -61,6 +75,14 @@ class MoviesModel:
         return None
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[Movie]:
+        """
+        GET - /api/Movies/{imdbID}
+        Args:
+            imdbID: str - the imdbID of the movie in the database
+        Returns:
+            Optional[Movie] - a movies in the database with the imdbID=imdbID in the Movie format
+            None if response.status_code == 404
+        """
         url = f"http://localhost:{self.PORT}/api/Movies/search/{imdbID}"
 
         response = requests.get(url)
@@ -73,6 +95,15 @@ class MoviesModel:
     def get_movies_search(
         self, s: str, y: Optional[int] = None
     ) -> Optional[list[MediaDto]]:
+        """
+        GET - /api/Movies/search/?s=s
+        Args:
+            s: str - search term
+            y: int - year of the media
+        Returns:
+            Optional[list[MediaDto]] - a list of media in the Omdb API database in the Media format
+            None if response.status_code == 404
+        """
         url = f"http://localhost:{self.PORT}/api/Movies/search/?s={s}"
         if y:
             url += f"&y={y}"
@@ -85,6 +116,14 @@ class MoviesModel:
         return None
 
     def post_movie(self, imdbID: str) -> Optional[Movie]:
+        """
+        POST - /api/Movies/?imdbID=imdbID
+        Args:
+            imdbID : str - the imdbID of the movie in the database
+        Returns:
+            Optional[Movie] - a movie that was inserted in the database from the Omdb API
+            None if response.status_code == 404
+        """
         url = f"http://localhost:{self.PORT}/api/Movies?imdbID={imdbID}"
 
         response = requests.post(url)
