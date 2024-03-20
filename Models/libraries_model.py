@@ -2,33 +2,9 @@ import requests
 import json
 from typing import Optional
 
-from . import MediaDto
+from . import MediaDto, CreateLibraryDto, GetLibraryDto
 
 PORT = 5062
-
-
-class CreateLibraryDto:
-    """Data Transfer Object Class for the CreateLibraryDto"""
-
-    def __init__(self, name: str, keywords: list[str]):
-        self.name = name
-        self.keywords = ",".join(keywords)
-
-    def __repr__(self) -> str:
-        return f"CreateLibraryDto(name={self.name}, keywords={self.keywords})"
-
-
-class GetLibraryDto:
-    """Data Transfer Object Class for the GetLibraryDto"""
-
-    def __init__(self, id: int, name: str, keywords: str, media: list[MediaDto]):
-        self.id = id
-        self.name = name
-        self.keywords = keywords.split(",")
-        self.media = media
-
-    def __repr__(self) -> str:
-        return f"CreateLibraryDto(id={self.id}, name={self.name}, keywords={self.keywords}, len(media)={len(self.media)})"
 
 
 class LibrariesModel:
