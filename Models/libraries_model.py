@@ -159,7 +159,7 @@ class LibrariesModel:
         """
         url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
 
-        response = requests.post(url, json=data)
+        response = requests.post(url)
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
@@ -180,7 +180,7 @@ class LibrariesModel:
         """
         url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
-        response = requests.post(url, json=data)
+        response = requests.post(url)
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
