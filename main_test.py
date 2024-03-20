@@ -1,8 +1,8 @@
-from Tests import test_movies_model
+from Tests import *
 
 
 def main():
-    test_movies_model()
+    print("hi")
 
 
 if __name__ == "__main__":

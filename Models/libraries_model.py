@@ -1,4 +1,5 @@
 import requests
+import json
 from typing import Optional
 
 from . import MediaDto
@@ -20,13 +21,14 @@ class CreateLibraryDto:
 class GetLibraryDto:
     """Data Transfer Object Class for the GetLibraryDto"""
 
-    def __init__(self, name: str, keywords: str, media: list[MediaDto]):
+    def __init__(self, id: int, name: str, keywords: str, media: list[MediaDto]):
+        self.id = id
         self.name = name
         self.keywords = keywords.split(",")
         self.media = media
 
     def __repr__(self) -> str:
-        return f"CreateLibraryDto(name={self.name}, keywords={self.keywords}, len(media)={len(self.media)})"
+        return f"CreateLibraryDto(id={self.id}, name={self.name}, keywords={self.keywords}, len(media)={len(self.media)})"
 
 
 class LibrariesModel:
@@ -138,7 +140,7 @@ class LibrariesModel:
             None if response.status_code == 404
         """
         url = f"http://localhost:{self.PORT}/api/Libraries"
-        data = CreateLibraryDto.__dict__
+        data = library.__dict__
 
         response = requests.post(url, json=data)
         if response.status_code == 201:
@@ -245,7 +247,7 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleted else False
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
+        url = f"http://localhost:{self.PORT}/api/Libraries?id={id}"
 
         response = requests.delete(url)
         return response.status_code == 204

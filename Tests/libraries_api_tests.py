@@ -1,6 +1,6 @@
 from typing import Optional
 
-from Models import LibrariesModel
+from Models import LibrariesModel, GetLibraryDto, CreateLibraryDto, MediaDto
 
 libraries_model = LibrariesModel()
 
@@ -24,7 +24,7 @@ def test_get_library_id(id: int = 1) -> None:
 
 def test_get_library_movies(id: int = 1) -> None:
     medias: Optional[list[MediaDto]] = libraries_model.get_library_movies(id=id)
-    if not medias:
+    if medias is None:
         print("There was an error")
     else:
         for media in medias:
@@ -33,7 +33,7 @@ def test_get_library_movies(id: int = 1) -> None:
 
 def test_get_library_tvseries(id: int) -> None:
     medias: Optional[list[MediaDto]] = libraries_model.get_library_tvseries(id=id)
-    if not medias:
+    if medias is None:
         print("There was an error")
     else:
         for media in medias:
@@ -44,7 +44,7 @@ def test_get_libraries_name(name: str = "My") -> None:
     libraries: Optional[list[GetLibraryDto]] = libraries_model.get_libraries_name(
         name=name
     )
-    if not libraries:
+    if libraries is None:
         print("There was an error")
     else:
         for library in libraries:
@@ -66,7 +66,7 @@ def test_post_libraries() -> None:
 
 def test_post_libraries_movies(id: int = 1, imdbID: str = "tt0080684") -> None:
     movie: Optional[MediaDto] = libraries_model.post_libraries_movies(
-        id=id, imdbID=imdbID
+        library_id=id, imdbID=imdbID
     )
     if not movie:
         print("There was an error")
@@ -76,7 +76,7 @@ def test_post_libraries_movies(id: int = 1, imdbID: str = "tt0080684") -> None:
 
 def test_post_libraries_tvseries(id: int = 1, imdbID: str = "tt2934286") -> None:
     tvseries: Optional[MediaDto] = libraries_model.post_libraries_tvseries(
-        id=id, imdbID=imdbID
+        library_id=id, imdbID=imdbID
     )
     if not tvseries:
         print("There was an error")
@@ -85,12 +85,12 @@ def test_post_libraries_tvseries(id: int = 1, imdbID: str = "tt2934286") -> None
 
 
 def test_delete_libraries_movies(id: int = 1, imdbID: str = "tt0080684") -> None:
-    res = libraries_model.delete_libraries_movies(id=1, imdbID="tt0080684")
+    res = libraries_model.delete_libraries_movies(library_id=1, imdbID="tt0080684")
     print(f"the deletion was a success" if res else "the was a problem in the deletion")
 
 
 def test_delete_libraries_tvseries(id: int = 1, imdbID: str = "tt2934286") -> None:
-    res = libraries_model.delete_libraries_tvseries(id=id, imdbID="tt2934286")
+    res = libraries_model.delete_libraries_tvseries(library_id=id, imdbID="tt2934286")
     print(f"the deletion was a success" if res else "the was a problem in the deletion")
 
 
@@ -98,7 +98,7 @@ def test_put_libraries_id() -> None:
     library: CreateLibraryDto = CreateLibraryDto(
         name="My Library II", keywords=["Action"]
     )
-    library_response: Optional[GetLibraryDto] = libraries_model.put_libraries_id(
+    library_response: Optional[CreateLibraryDto] = libraries_model.put_libraries_id(
         id=1, library=library
     )
     if not library_response:
