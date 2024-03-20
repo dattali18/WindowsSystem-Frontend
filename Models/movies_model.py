@@ -40,7 +40,7 @@ class MoviesModel:
     def __init__(self, PORT: int = PORT):
         self.PORT = PORT
 
-    def get_movies(self) -> list[Movie]:
+    def get_movies(self) -> Optional[list[Movie]]:
         url = f"http://localhost:{self.PORT}/api/Movies"
 
         response = requests.get(url)
@@ -48,8 +48,7 @@ class MoviesModel:
             json_str = response.text
             json_obj = json.loads(json_str)
             return [Movie(**obj) for obj in json_obj]
-        else:
-            return []
+        return None
 
     def get_movie_id(self, id: int) -> Optional[Movie]:
         url = f"http://localhost:{self.PORT}/api/Movies/{id}"
@@ -59,7 +58,6 @@ class MoviesModel:
             json_str = response.text
             json_obj = json.loads(json_str)
             return Movie(**json_obj)
-
         return None
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[Movie]:
@@ -70,10 +68,11 @@ class MoviesModel:
             json_str = response.text
             json_obj = json.loads(json_str)
             return Movie(**json_obj)
-
         return None
 
-    def get_movies_search(self, s: str, y: Optional[int] = None) -> list[MediaDto]:
+    def get_movies_search(
+        self, s: str, y: Optional[int] = None
+    ) -> Optional[list[MediaDto]]:
         url = f"http://localhost:{self.PORT}/api/Movies/search/?s={s}"
         if y:
             url += f"&y={y}"
@@ -83,8 +82,7 @@ class MoviesModel:
             json_str = response.text
             json_obj = json.loads(json_str)
             return [MediaDto(**obj) for obj in json_obj]
-
-        return []
+        return None
 
     def post_movie(self, imdbID: str) -> Optional[Movie]:
         url = f"http://localhost:{self.PORT}/api/Movies?imdbID={imdbID}"
@@ -94,5 +92,4 @@ class MoviesModel:
             json_str = response.text
             json_obj = json.loads(json_str)
             return Movie(**json_obj)
-
         return None
