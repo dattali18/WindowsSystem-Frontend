@@ -26,7 +26,7 @@ class MoviesModel:
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return [Movie(**obj) for obj in json_obj]
+            return [MediaDto(**obj) for obj in json_obj]
         return None
 
     def get_movie_id(self, id: int) -> Optional[MovieDto]:
@@ -44,7 +44,7 @@ class MoviesModel:
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return Movie(**json_obj)
+            return MediaDto(**json_obj)
         return None
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[MovieDto]:
@@ -62,7 +62,7 @@ class MoviesModel:
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return Movie(**json_obj)
+            return MediaDto(**json_obj)
         return None
 
     def get_movies_search(
@@ -103,5 +103,5 @@ class MoviesModel:
         if response.status_code in {200, 201}:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return Movie(**json_obj)
+            return MediaDto(**json_obj)
         return None
