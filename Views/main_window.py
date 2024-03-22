@@ -55,15 +55,18 @@ class Controller:
         self.view.libraries_table.setRowCount(11)
 
         self.view.libraries_table.setItem(0, 0, QTableWidgetItem("Header 1"))
-        self.view.libraries_table.setItem(1, 0, QTableWidgetItem("Header 2"))
-        self.view.libraries_table.setItem(2, 0, QTableWidgetItem("Header 3"))
+        self.view.libraries_table.setItem(0, 1, QTableWidgetItem("Header 2"))
+        self.view.libraries_table.setItem(0, 2, QTableWidgetItem("Header 3"))
 
         for i in range(3):
             for j in range(10):
-                self.view.libraries_table.setItem(i, j + 1, QTableWidgetItem("Some text"))
-                print(f"{i=}, {j=}")
+                self.view.libraries_table.setItem(j + 1, i, QTableWidgetItem("Some text"))
 
         self.view.libraries_table.horizontalHeader().setStretchLastSection(True)
         self.view.libraries_table.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.view.libraries_table.verticalHeader().setStretchLastSection(True)
+        self.view.libraries_table.verticalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
