@@ -1,1 +1,1 @@
-from .main_window import MainWindow, Controller
+from .main_window import MainWindow, Controller, Frame1Window

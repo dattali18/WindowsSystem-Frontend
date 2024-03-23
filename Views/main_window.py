@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (
     QTableWidgetItem,
     QHeaderView,
     QLineEdit,
+    QLabel
 )
 from PySide6.QtGui import QAction
 from PySide6.QtCore import QFile, QIODevice
@@ -14,7 +15,19 @@ import sys
 from typing import Optional
 
 from .form_ui import Ui_MainWindow
+from .form_1_ui import Ui_MainWindow as Ui_frame_1
 from Models import *
+
+class Frame1Window(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Frame1Window, self).__init__()
+        self.ui = Ui_frame_1()
+        self.ui.setupUi(self)
+
+        label = QLabel("<font color=red size=40>Hello World!</font>")
+        self.ui.frame_1 = label
+        button = QPushButton("Click me")
+        self.ui.frame_2 = button
 
 
 class MainWindow(QtWidgets.QMainWindow):

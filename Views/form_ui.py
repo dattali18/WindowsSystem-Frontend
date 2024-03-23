@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setFont(font1)
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 801, 551))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 801, 541))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(5, 5, 5, 5)

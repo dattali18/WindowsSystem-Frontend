@@ -59,13 +59,17 @@ class LibrariesModel:
             with id=id in a MediaDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
+        try:
+            url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
 
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [MediaDto(**obj) for obj in json_obj]
+            response = requests.get(url)
+            response.raise_for_status()
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [MediaDto(**obj) for obj in json_obj]
+        except ConnectionError:
+            return None
         return None
 
     def get_library_tvseries(self, id: int) -> Optional[list[MediaDto]]:
