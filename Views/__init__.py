@@ -1,1 +1,1 @@
-from .main_window import MainWindow, Controller, Frame1Window
+from .main_window import LibrariesViewWindow, LibrariesController, MediaViewWindow, MediaController

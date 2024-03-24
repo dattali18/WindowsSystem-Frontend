@@ -7,116 +7,92 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Library View</string>
+   <string>Media View</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>9</x>
+      <y>9</y>
       <width>781</width>
-      <height>531</height>
+      <height>631</height>
      </rect>
     </property>
-    <widget class="QWidget" name="frame_1">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>751</width>
-        <height>491</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QLineEdit" name="search_field">
          <property name="font">
           <font>
            <pointsize>14</pointsize>
           </font>
          </property>
-         <property name="title">
-          <string>Group 1</string>
+         <property name="styleSheet">
+          <string notr="true">padding: 2 10;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+         <property name="placeholderText">
+          <string>Seach For Movies/Tv Series</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="combo_box">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>Movies</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tv Series</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="search_btn">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Search</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>false</bool>
          </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-         <widget class="QWidget" name="verticalLayoutWidget_2">
-          <property name="geometry">
-           <rect>
-            <x>9</x>
-            <y>29</y>
-            <width>731</width>
-            <height>211</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Title</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QPushButton" name="pushButton">
-               <property name="font">
-                <font>
-                 <pointsize>13</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="title">
-          <string>Group 2</string>
-         </property>
         </widget>
        </item>
       </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="frame_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-    </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="media_table"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -128,32 +104,8 @@
      <height>24</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFrames">
-    <property name="title">
-     <string>Frames</string>
-    </property>
-    <addaction name="frame1_action"/>
-    <addaction name="frame2_action"/>
-   </widget>
-   <addaction name="menuFrames"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="frame1_action">
-   <property name="text">
-    <string>Frame 1</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+1</string>
-   </property>
-  </action>
-  <action name="frame2_action">
-   <property name="text">
-    <string>Frame 2</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+2</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>
