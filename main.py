@@ -2,8 +2,13 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from Views import LibrariesViewWindow, MediaController, MediaViewWindow
-from Models import LibrariesModel, MoviesModel
+# from Controllers import MediaController
+# from Models import MoviesModel
+# from Views import MediaViewWindow
+
+from Controllers import MovieController
+from Models import MoviesModel
+from Views import MovieViewWindow
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -11,7 +16,9 @@ if __name__ == "__main__":
     # controller = Controller(view=window, model=LibrariesModel())
     # controller.window.show()
 
-    frame1 = MediaViewWindow()
-    controller = MediaController(view=frame1, model=MoviesModel())
-    frame1.show()
+    # controller = MediaController(view=MediaViewWindow(), model=MoviesModel())
+    # controller.window.show()
+
+    controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
+    controller.window.show()
     sys.exit(app.exec())
