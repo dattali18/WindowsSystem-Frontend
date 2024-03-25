@@ -105,7 +105,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Movie Window", None))
         self.title.setText(QCoreApplication.translate("MainWindow", u"Movie TItle", None))
         self.rating.setText(QCoreApplication.translate("MainWindow", u"rating", None))
         self.imdb.setText(QCoreApplication.translate("MainWindow", u"imdb ID", None))
