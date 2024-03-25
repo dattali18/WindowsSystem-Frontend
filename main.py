@@ -10,7 +10,8 @@ from Controllers import MovieController
 from Models import MoviesModel
 from Views import MovieViewWindow
 
-if __name__ == "__main__":
+
+def main():
     app = QApplication(sys.argv)
     # window = MainWindow()
     # controller = Controller(view=window, model=LibrariesModel())
@@ -22,3 +23,7 @@ if __name__ == "__main__":
     controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
     controller.window.show()
     sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
