@@ -2,28 +2,37 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-# from Controllers import MediaController
-# from Models import MoviesModel
-# from Views import MediaViewWindow
-
-from Controllers import LibrariesController
-from Models import LibrariesModel
-from Views import LibrariesViewWindow
+from Controllers import LibrariesController, MediaController, MovieController
+from Models import LibrariesModel, MoviesModel
+from Views import LibrariesViewWindow, MediaViewWindow, MovieViewWindow
 
 
-def main():
+def LibraryWindow() -> None:
+    """Show library window."""
     app = QApplication(sys.argv)
-
     controller = LibrariesController(view=LibrariesViewWindow(), model=LibrariesModel())
     controller.window.show()
-
-    # controller = MediaController(view=MediaViewWindow(), model=MoviesModel())
-    # controller.window.show()
-
-    # controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
-    # controller.window.show()
-
     sys.exit(app.exec())
+
+
+def media_window() -> None:
+    """Show media window."""
+    app = QApplication(sys.argv)
+    controller = MediaController(view=MediaViewWindow(), model=MoviesModel())
+    controller.window.show()
+    sys.exit(app.exec())
+
+
+def MovieWindow() -> None:
+    """Show movie window."""
+    app = QApplication(sys.argv)
+    controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
+    controller.window.show()
+    sys.exit(app.exec())
+
+
+def main() -> None:
+    MediaWindow()
 
 
 if __name__ == "__main__":
