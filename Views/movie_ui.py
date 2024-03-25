@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
-    QMenuBar, QSizePolicy, QStatusBar, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QMainWindow, QMenuBar, QSizePolicy, QStatusBar,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -26,55 +26,69 @@ class Ui_MainWindow(object):
         MainWindow.resize(640, 480)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayoutWidget = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(9, 5, 621, 411))
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.title = QLabel(self.horizontalLayoutWidget)
+        self.verticalLayoutWidget = QWidget(self.centralwidget)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 631, 431))
+        self.verticalLayout_2 = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.title = QLabel(self.verticalLayoutWidget)
         self.title.setObjectName(u"title")
         font = QFont()
         font.setPointSize(24)
         self.title.setFont(font)
+        self.title.setMargin(10)
 
-        self.verticalLayout.addWidget(self.title, 0, Qt.AlignHCenter)
+        self.verticalLayout_2.addWidget(self.title, 0, Qt.AlignHCenter)
 
-        self.rating = QLabel(self.horizontalLayoutWidget)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(25, -1, -1, -1)
+        self.rating = QLabel(self.verticalLayoutWidget)
         self.rating.setObjectName(u"rating")
         font1 = QFont()
-        font1.setPointSize(18)
+        font1.setPointSize(20)
         self.rating.setFont(font1)
 
         self.verticalLayout.addWidget(self.rating)
 
-        self.imdb = QLabel(self.horizontalLayoutWidget)
+        self.imdb = QLabel(self.verticalLayoutWidget)
         self.imdb.setObjectName(u"imdb")
         self.imdb.setFont(font1)
 
         self.verticalLayout.addWidget(self.imdb)
 
-        self.year = QLabel(self.horizontalLayoutWidget)
+        self.year = QLabel(self.verticalLayoutWidget)
         self.year.setObjectName(u"year")
         self.year.setFont(font1)
 
         self.verticalLayout.addWidget(self.year)
 
-        self.genre = QLabel(self.horizontalLayoutWidget)
+        self.genre = QLabel(self.verticalLayoutWidget)
         self.genre.setObjectName(u"genre")
         self.genre.setFont(font1)
+        self.genre.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.genre)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
-        self.image = QLabel(self.horizontalLayoutWidget)
+        self.image = QLabel(self.verticalLayoutWidget)
         self.image.setObjectName(u"image")
+        self.image.setFrameShape(QFrame.WinPanel)
+        self.image.setFrameShadow(QFrame.Plain)
+        self.image.setLineWidth(1)
+        self.image.setMargin(0)
+        self.image.setIndent(-1)
 
         self.horizontalLayout.addWidget(self.image)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)

@@ -40,18 +40,18 @@ class MovieController:
 
     def populate_media_table(self):
         self.title.setText(f"{self.movie.title}")
-        self.genre.setText(f"Genre \t{self.movie.genre}")
-        self.imdbID.setText(f"Imdb ID \t{self.movie.imdbID}")
-        self.year.setText(f"Year \t{self.movie.year}")
-        self.rating.setText(f"Rating \t{self.movie.rating}")
+        self.genre.setText(f"Genre: \t{self.movie.genre}")
+        self.imdbID.setText(f"Imdb ID: \t{self.movie.imdbID}")
+        self.year.setText(f"Year: \t{self.movie.year}")
+        self.rating.setText(f"Rating: \t{self.movie.rating}")
         self.getAndSetImageFromURL(self.movie.poster_url)
 
     def getAndSetImageFromURL(self, imageURL):
         request = requests.get(imageURL)
         self.pixmap.loadFromData(request.content)
-        width = self.view.horizontalLayoutWidget.width()
-        height = self.view.horizontalLayoutWidget.height()
-        self.pixmap = self.pixmap.scaled(width, height, QtCore.Qt.KeepAspectRatio)
+        width = self.view.menubar.width()
+        height = self.view.menubar.height()
+        self.pixmap = self.pixmap.scaled(width // 2, width, QtCore.Qt.KeepAspectRatio)
         self.image.setPixmap(self.pixmap)
 
     def create_random_data_for_debug(self):
