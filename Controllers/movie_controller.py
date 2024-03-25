@@ -1,17 +1,9 @@
 from Views import MovieViewWindow
 from Models import MoviesModel, MovieDto
 
-from PySide6 import QtWidgets, QtCore
-from PySide6.QtWidgets import (
-    QPushButton,
-    QTableWidget,
-    QTableWidgetItem,
-    QHeaderView,
-    QLineEdit,
-    QLabel,
-    QComboBox,
-)
-from PySide6.QtGui import QPixmap, QScreen
+from PySide6 import QtCore
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QLabel
 
 from typing import Optional
 import requests
@@ -19,31 +11,33 @@ import requests
 
 class MovieController:
 
-    def __init__(self, view: MovieViewWindow, model: MoviesModel):
+    def __init__(self, imdbID: str, view: MovieViewWindow, model: MoviesModel):
         self.view = view.ui
         self.window = view
         self.model = model
+        self.imdbID_str = imdbID
 
         self.movie: Optional[MovieDto] = None
 
-        self.title = self.view.title
-        self.genre = self.view.genre
-        self.imdbID = self.view.imdb
-        self.year = self.view.year
-        self.rating = self.view.rating
-        self.image = self.view.image
+        self.title: QLabel = self.view.title
+        self.genre: QLabel = self.view.genre
+        self.imdbID: QLabel = self.view.imdb
+        self.year: QLabel = self.view.year
+        self.rating: QLabel = self.view.rating
+        self.image: QLabel = self.view.image
 
         self.pixmap = QPixmap()
 
-        self.create_random_data_for_debug()
-        self.populate_media_table()
+        # self.create_random_data_for_debug()
+        # self.populate_data()
+        self.get_movie_from_imdbID()
 
-    def populate_media_table(self):
+    def populate_data(self):
         self.title.setText(f"{self.movie.title}")
-        self.genre.setText(f"Genre: \t{self.movie.genre}")
-        self.imdbID.setText(f"Imdb ID: \t{self.movie.imdbID}")
-        self.year.setText(f"Year: \t{self.movie.year}")
-        self.rating.setText(f"Rating: \t{self.movie.rating}")
+        self.genre.setText(f"Genre: {self.movie.genre}")
+        self.imdbID.setText(f"Imdb ID: {self.movie.imdbID}")
+        self.year.setText(f"Year: {self.movie.year}")
+        self.rating.setText(f"Rating: {self.movie.rating}")
         self.getAndSetImageFromURL(self.movie.poster_url)
 
     def getAndSetImageFromURL(self, imageURL):
@@ -65,3 +59,10 @@ class MovieController:
             time=123,
             posterURL="https://www.komar.de/media/catalog/product/cache/5/image/1230x/17f82f742ffe127f42dca9de82fb58b1/4/-/4-4127_avengers_endgame_movie_poster_web.jpg",
         )
+
+    def get_movie_from_imdbID(self):
+        self.movie = self.model.get_movie_imdbID(imdbID=self.imdbID_str)
+        if self.movie is None:
+            print("404 probelm please check backend")
+        else:
+            self.populate_data()

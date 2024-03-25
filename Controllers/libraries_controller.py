@@ -2,19 +2,14 @@ from Views import LibrariesViewWindow, MovieViewWindow
 from Models import LibrariesModel, MoviesModel, GetLibraryDto
 from .movie_controller import MovieController
 
-from PySide6 import QtWidgets
 from PySide6.QtWidgets import (
     QPushButton,
     QTableWidget,
     QTableWidgetItem,
     QHeaderView,
     QLineEdit,
-    QLabel,
-    QComboBox,
 )
 from PySide6.QtGui import QAction
-from PySide6.QtCore import QFile, QIODevice
-from PySide6.QtUiTools import QUiLoader
 
 from typing import Optional
 

@@ -44,7 +44,7 @@ class MoviesModel:
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return MediaDto(**json_obj)
+            return MovieDto(**json_obj)
         return None
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[MovieDto]:
@@ -57,12 +57,11 @@ class MoviesModel:
             None if response.status_code == 404
         """
         url = f"http://localhost:{self.PORT}/api/Movies/search/{imdbID}"
-
         response = requests.get(url)
         if response.status_code == 200:
             json_str = response.text
             json_obj = json.loads(json_str)
-            return MediaDto(**json_obj)
+            return MovieDto(**json_obj)
         return None
 
     def get_movies_search(

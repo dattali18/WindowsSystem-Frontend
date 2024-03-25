@@ -7,7 +7,7 @@ from Models import LibrariesModel, MoviesModel
 from Views import LibrariesViewWindow, MediaViewWindow, MovieViewWindow
 
 
-def LibraryWindow() -> None:
+def library_window() -> None:
     """Show library window."""
     app = QApplication(sys.argv)
     controller = LibrariesController(view=LibrariesViewWindow(), model=LibrariesModel())
@@ -23,7 +23,7 @@ def media_window() -> None:
     sys.exit(app.exec())
 
 
-def MovieWindow() -> None:
+def movie_window() -> None:
     """Show movie window."""
     app = QApplication(sys.argv)
     controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
@@ -32,7 +32,7 @@ def MovieWindow() -> None:
 
 
 def main() -> None:
-    MediaWindow()
+    media_window()
 
 
 if __name__ == "__main__":
