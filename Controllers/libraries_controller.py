@@ -1,5 +1,6 @@
-from Views import LibrariesViewWindow
-from Models import LibrariesModel
+from Views import LibrariesViewWindow, MovieViewWindow
+from Models import LibrariesModel, MoviesModel, GetLibraryDto
+from .movie_controller import MovieController
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import (
@@ -49,7 +50,13 @@ class LibrariesController:
 
         self.view.libraries_table.cellClicked.connect(self.handle_click)
 
-        self.libraries: Optional[list[GetLibraryDto]] = self.model.get_libraries()
+        self.movie_controller = MovieController(
+            view=MovieViewWindow(), model=MoviesModel()
+        )
+
+        # self.libraries: Optional[list[GetLibraryDto]] = self.model.get_libraries()
+        # TODO - Remove when not in debug
+        self.create_random_data_for_debug()
         self.populate_libraries_table()
 
     def handle_search(self):
@@ -68,6 +75,8 @@ class LibrariesController:
 
     def handle_click(self, row: int, column: int):
         print(f"item clicked at {row=}, {column=}")
+        if self.movie_controller.movie is not None:
+            self.movie_controller.window.show()
 
     def populate_libraries_table(self):
         # deleting all the old entries
@@ -99,7 +108,31 @@ class LibrariesController:
         self.view.libraries_table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-        # self.view.libraries_table.verticalHeader().setStretchLastSection(True)
-        # self.view.libraries_table.verticalHeader().setSectionResizeMode(
-        #     QHeaderView.Stretch
-        # )
+
+    def create_random_data_for_debug(self):
+        self.libraries = [
+            GetLibraryDto(
+                id=0,
+                name="Star Wars",
+                keywords=",".join(["Action", "Sci-Fi"]),
+                media=[],
+            ),
+            GetLibraryDto(
+                id=1,
+                name="Lord of the Rings",
+                keywords=",".join(["Action", "Fantasy"]),
+                media=[],
+            ),
+            GetLibraryDto(
+                id=2,
+                name="Harry Potter",
+                keywords=",".join(["Action", "Fantasy"]),
+                media=[],
+            ),
+            GetLibraryDto(
+                id=3,
+                name="Game of Thrones",
+                keywords=",".join(["Action", "Fantasy"]),
+                media=[],
+            ),
+        ]

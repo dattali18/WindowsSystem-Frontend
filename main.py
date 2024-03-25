@@ -6,22 +6,23 @@ from PySide6.QtWidgets import QApplication
 # from Models import MoviesModel
 # from Views import MediaViewWindow
 
-from Controllers import MovieController
-from Models import MoviesModel
-from Views import MovieViewWindow
+from Controllers import LibrariesController
+from Models import LibrariesModel
+from Views import LibrariesViewWindow
 
 
 def main():
     app = QApplication(sys.argv)
-    # window = MainWindow()
-    # controller = Controller(view=window, model=LibrariesModel())
-    # controller.window.show()
+
+    controller = LibrariesController(view=LibrariesViewWindow(), model=LibrariesModel())
+    controller.window.show()
 
     # controller = MediaController(view=MediaViewWindow(), model=MoviesModel())
     # controller.window.show()
 
-    controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
-    controller.window.show()
+    # controller = MovieController(view=MovieViewWindow(), model=MoviesModel())
+    # controller.window.show()
+
     sys.exit(app.exec())
 
 
