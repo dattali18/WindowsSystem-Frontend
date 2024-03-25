@@ -2,6 +2,7 @@ from PySide6 import QtWidgets
 
 from .form_ui import Ui_MainWindow
 
+
 class LibrariesViewWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(LibrariesViewWindow, self).__init__()
