@@ -4,10 +4,25 @@ from PySide6.QtWidgets import QApplication
 
 from Controllers import LibrariesController, MediaController, MovieController
 from Models import LibrariesModel, MoviesModel
-from Views import LibrariesViewWindow, MediaViewWindow, MovieViewWindow
+from Views import (
+    LibrariesViewWindow,
+    MediaViewWindow,
+    MovieViewWindow,
+    LibraryViewWindow,
+)
 
 
 def library_window() -> None:
+    """Show library window."""
+    app = QApplication(sys.argv)
+    # controller = LibrariesController(view=LibrariesViewWindow(), model=LibrariesModel())
+    # controller.window.show()
+    window = LibraryViewWindow()
+    window.show()
+    sys.exit(app.exec())
+
+
+def libraries_window() -> None:
     """Show library window."""
     app = QApplication(sys.argv)
     controller = LibrariesController(view=LibrariesViewWindow(), model=LibrariesModel())
@@ -32,7 +47,7 @@ def movie_window() -> None:
 
 
 def main() -> None:
-    media_window()
+    library_window()
 
 
 if __name__ == "__main__":
