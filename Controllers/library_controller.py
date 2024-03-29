@@ -3,15 +3,20 @@ from Models import LibraryModel, CreateLibraryDto, MoviesModel, TvSeriesModel
 
 from typing import Optional
 
-
 class LibraryController:
-    def __init__(
-        self,
-        view: LibraryViewWindow,
-        library_model: LibraryModel,
-        movie_model: MoviesModel,
-        tv_series_model: TVSeriesModel,
-    ):
+    """
+    The LibraryController class is responsible for managing the operations of the library window.
+
+    This includes tasks such as adding, removing, or updating books in the library, managing user accounts, 
+    and handling book checkouts and returns.
+
+    Attributes:
+        None
+
+    Methods:
+        To be defined.
+    """
+    def __init__(self, view: LibraryViewWindow, library_model: LibraryModel, movie_model: MoviesModel, tv_series_model: TVSeriesModel):
         self.view = view.ui
         self.window = view
         self.library_model = library_model

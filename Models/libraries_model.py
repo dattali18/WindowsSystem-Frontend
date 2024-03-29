@@ -4,14 +4,14 @@ from typing import Optional
 
 from . import MediaDto, CreateLibraryDto, GetLibraryDto
 
-PORT = 5062
+from config import BASE_URL
 
 
 class LibrariesModel:
     """Model Class for the Library Entity"""
 
-    def __init__(self, PORT=PORT):
-        self.PORT = PORT
+    def __init__(self):
+        pass
 
     def get_libraries(self) -> Optional[list[GetLibraryDto]]:
         """
@@ -21,7 +21,8 @@ class LibrariesModel:
             in the database in a GetLibraryDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries"
+        # url = f"http://localhost:{self.PORT}/api/Libraries"
+        url = f"{BASE_URL}/Libraries"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -40,7 +41,8 @@ class LibrariesModel:
             with id=id in a GetLibraryDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
+        url = f"{BASE_URL}/Libraries/{id}"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -59,17 +61,15 @@ class LibrariesModel:
             with id=id in a MediaDto format
             None if response.status_code == 404
         """
-        try:
-            url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
+        url = f"{BASE_URL}/Libraries/{id}/movies"
 
-            response = requests.get(url)
-            response.raise_for_status()
-            if response.status_code == 200:
-                json_str = response.text
-                json_obj = json.loads(json_str)
-                return [MediaDto(**obj) for obj in json_obj]
-        except ConnectionError:
-            return None
+        response = requests.get(url)
+        response.raise_for_status()
+        if response.status_code == 200:
+            json_str = response.text
+            json_obj = json.loads(json_str)
+            return [MediaDto(**obj) for obj in json_obj]
         return None
 
     def get_library_tvseries(self, id: int) -> Optional[list[MediaDto]]:
@@ -82,7 +82,8 @@ class LibrariesModel:
             library with id=id in a MediaDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{id}/tvseries"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/tvseries"
+        url = f"{BASE_URL}/Libraries/{id}/tvseries"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -101,7 +102,8 @@ class LibrariesModel:
             in the database with name starting with name in a GetLibrary format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/search/{name}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/search/{name}"
+        url = f"{BASE_URL}/Libraries/search/{name}"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -119,7 +121,8 @@ class LibrariesModel:
             Optional[GetLibraryDto] - a library object that was created
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries"
+        # url = f"http://localhost:{self.PORT}/api/Libraries"
+        url = f"{BASE_URL}/Libraries"
         data = library.__dict__
 
         response = requests.post(url, json=data)
@@ -139,7 +142,8 @@ class LibrariesModel:
             Optional[MediaDto] - the movie object that was added to the library in MediaDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
+        url = f"{BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
         response = requests.post(url)
         if response.status_code == 200:
@@ -160,7 +164,8 @@ class LibrariesModel:
             Optional[MediaDto] - the tvseries object that was added to the library in MediaDto format
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
+        url = f"{BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
         response = requests.post(url)
         if response.status_code == 200:
@@ -178,7 +183,8 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleting else False
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
+        url = f"{BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
         response = requests.delete(url)
         return response.status_code == 204
@@ -192,7 +198,8 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleting else False
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
+        url = f"{BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
         response = requests.delete(url)
         return response.status_code == 204
@@ -209,7 +216,8 @@ class LibrariesModel:
             Optional[GetLibraryDto] - a library object that was changed
             None if response.status_code == 404
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
+        url = f"{BASE_URL}/Libraries/{id}"
         data = CreateLibraryDto.__dict__
 
         response = requests.put(url, json=data)
@@ -227,7 +235,8 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleted else False
         """
-        url = f"http://localhost:{self.PORT}/api/Libraries?id={id}"
+        # url = f"http://localhost:{self.PORT}/api/Libraries?id={id}"
+        url = f"{BASE_URL}/Libraries?id={id}"
 
         response = requests.delete(url)
         return response.status_code == 204
