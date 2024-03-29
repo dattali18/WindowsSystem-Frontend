@@ -1,5 +1,5 @@
 from Views import LibraryViewWindow
-from Models import LibraryModel, CreateLibraryDto, MoviesModel, TvSeriesModel, MediaDto
+from Models import LibrariesModel, CreateLibraryDto, MoviesModel, TvSeriesModel, MediaDto
 from typing import Optional
 
 
@@ -20,7 +20,7 @@ class LibraryController:
     def __init__(
         self,
         view: LibraryViewWindow,
-        library_model: LibraryModel,
+        library_model: LibrariesModel,
         movie_model: MoviesModel,
         tv_series_model: TVSeriesModel,
     ):
@@ -48,6 +48,8 @@ class LibraryController:
         self.add_btn.clicked.connect(self.handle_add)
 
         self.media: Optional[list[MediaDto]] = None
+        self.movies: list[str] = []
+        self.series: list[str] = []
 
         def populate_search_list(self):
             """Populate the search list with the searched media"""
@@ -78,12 +80,32 @@ class LibraryController:
                 # Code to get TV series based on search_text
                 # TODO: for Yair implement this part
                 print(f"searched for {search_text=}, to be handled by Yair")
+            self.populate_search_list()
 
         def handle_create(self):
             pass
 
         def handle_remove(self):
-            pass
+            selected_item = self.library_lst.currentItem()
+            if selected_item:
+                media = selected_item.data()
+                imdb_id = media.imdbID
+                if media.type == "Movies":
+                    self.movies.remove(imdb_id)
+                else:
+                    self.series.remove(imdb_id)
+            else:
+                print("No media selected.")
 
         def handle_add(self):
-            pass
+            selected_item = self.search_lst.currentItem()
+            media_type = self.combo_box.currentText()
+            if selected_item:
+                media = selected_item.data()
+                imdb_id = media.imdbID
+                if media_type == "Movies":
+                    self.movies.append(imdb_id)
+                else:
+                    self.series.append(imdb_id)
+            else:
+                print("No media selected.")
