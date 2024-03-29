@@ -4,14 +4,14 @@ from typing import Optional
 
 from Models import MediaDto, MovieDto
 
-from config import BASE_URL
+from .config import BASE_URL
 
 
 class MoviesModel:
     """Model Class for the Movie Entity"""
 
-    def __init__(self):
-        pass
+    def __init__(self, BASE_URL: str = BASE_URL):
+        self.BASE_URL = BASE_URL
 
     def get_movies(self) -> Optional[list[MovieDto]]:
         """
@@ -20,7 +20,7 @@ class MoviesModel:
             Optional[list[Movie]] - a list of all movies in the database in the Movie format
             None if response.status_code == 404
         """
-        url = f"{BASE_URL}/Movies"
+        url = f"{self.BASE_URL}/Movies"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -38,7 +38,7 @@ class MoviesModel:
             Optional[Movie] - a movies in the database with the id=id in the Movie format
             None if response.status_code == 404
         """
-        url = f"{BASE_URL}/Movies/{id}"
+        url = f"{self.BASE_URL}/Movies/{id}"
         # url = f"http://localhost:{self.PORT}/api/Movies/{id}"
         response = requests.get(url)
         if response.status_code == 200:
@@ -56,7 +56,7 @@ class MoviesModel:
             Optional[Movie] - a movies in the database with the imdbID=imdbID in the Movie format
             None if response.status_code == 404
         """
-        url = f"{BASE_URL}/Movies/search/{imdbID}"
+        url = f"{self.BASE_URL}/Movies/search/{imdbID}"
         # url = f"http://localhost:{self.PORT}/api/Movies/search/{imdbID}"
         response = requests.get(url)
         if response.status_code == 200:
@@ -78,7 +78,7 @@ class MoviesModel:
             None if response.status_code == 404
         """
         # url = f"http://localhost:{self.PORT}/api/Movies/search/?s={s}"
-        url = f"{BASE_URL}/Movies/search/?s={s}"
+        url = f"{self.BASE_URL}/Movies/search/?s={s}"
         if y:
             url += f"&y={y}"
 
@@ -99,7 +99,7 @@ class MoviesModel:
             None if response.status_code == 404
         """
         # url = f"http://localhost:{self.PORT}/api/Movies?imdbID={imdbID}"
-        url = f"{BASE_URL}/Movies?imdbID={imdbID}"
+        url = f"{self.BASE_URL}/Movies?imdbID={imdbID}"
 
         response = requests.post(url)
         if response.status_code in {200, 201}:

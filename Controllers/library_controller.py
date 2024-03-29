@@ -1,13 +1,13 @@
 from Views import LibraryViewWindow
-from Models import LibraryModel, CreateLibraryDto, MoviesModel, TvSeriesModel
-
+from Models import LibraryModel, CreateLibraryDto, MoviesModel, TvSeriesModel, MediaDto
 from typing import Optional
+
 
 class LibraryController:
     """
     The LibraryController class is responsible for managing the operations of the library window.
 
-    This includes tasks such as adding, removing, or updating books in the library, managing user accounts, 
+    This includes tasks such as adding, removing, or updating books in the library, managing user accounts,
     and handling book checkouts and returns.
 
     Attributes:
@@ -16,7 +16,14 @@ class LibraryController:
     Methods:
         To be defined.
     """
-    def __init__(self, view: LibraryViewWindow, library_model: LibraryModel, movie_model: MoviesModel, tv_series_model: TVSeriesModel):
+
+    def __init__(
+        self,
+        view: LibraryViewWindow,
+        library_model: LibraryModel,
+        movie_model: MoviesModel,
+        tv_series_model: TVSeriesModel,
+    ):
         self.view = view.ui
         self.window = view
         self.library_model = library_model
@@ -42,6 +49,17 @@ class LibraryController:
 
         self.media: Optional[list[MediaDto]] = None
 
+        def populate_search_list(self):
+            """Populate the search list with the searched media"""
+            self.search_lst.clear()
+            if self.media:
+                for media in self.media:
+                    self.search_lst.addItem(media)
+            else:
+                # Handle case when media is None
+                # TODO: implement this later
+                print("No media found.")
+
         def handle_search(self):
             """search for a media from the api"""
             search_text = self.search_edit.text()
@@ -55,11 +73,11 @@ class LibraryController:
                 if self.media is None:
                     # Handle case when media is None
                     # TODO: implement this later
-                    pass
+                    print(f"404 error for search {search_text=}")
             elif media_type == "TV Series":
                 # Code to get TV series based on search_text
                 # TODO: for Yair implement this part
-                pass
+                print(f"searched for {search_text=}, to be handled by Yair")
 
         def handle_create(self):
             pass
