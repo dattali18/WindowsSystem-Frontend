@@ -64,19 +64,19 @@ class LibraryController:
 
         def handle_search(self):
             """search for a media from the api"""
-            search_text = self.search_edit.text()
+            search_text = self.search_edit.text().lower()
             media_type = self.combo_box.currentText()
 
             # Use self.model to send an API request to get media based on search_text and media_type
             # Store the result in a variable
 
-            if media_type == "Movies":
+            if media_type == "movies":
                 self.media = self.movie_model.get_movies_search(search_text)
                 if self.media is None:
                     # Handle case when media is None
                     # TODO: implement this later
                     print(f"404 error for search {search_text=}")
-            elif media_type == "TV Series":
+            elif media_type == "tv series":
                 # Code to get TV series based on search_text
                 # TODO: for Yair implement this part
                 print(f"searched for {search_text=}, to be handled by Yair")
