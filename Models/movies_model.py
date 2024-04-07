@@ -1,10 +1,12 @@
 import requests
 import json
+
 from typing import Optional
+
+from .config import BASE_URL
 
 from Models import MediaDto, MovieDto
 
-from .config import BASE_URL
 
 
 class MoviesModel:
