@@ -47,7 +47,7 @@ def movie_window() -> None:
 
 
 def main() -> None:
-    library_window()
+    libraries_window()
 
 
 if __name__ == "__main__":
