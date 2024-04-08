@@ -1,4 +1,3 @@
-from .movie_controller import MovieController
 from Views import MediaView
 from Models import MoviesModel, MediaDto
 

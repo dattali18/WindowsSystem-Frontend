@@ -1,35 +1,14 @@
 # this is the file for the library view in pyside6
-# this will contain the following widgets
-"""
-VStack {
-    Title_label
-    HStack {
-        Search_bar
-        Search_button
-    }
-    Group_box {
-        Checkbox1
-        Checkbox2
-        Checkbox3
-        Checkbox4
-        Checkbox5
-        Checkbox6
-    }
-    List_widget
-    Button_group {
-        Add_button
-        Update_button
-        Delete_button
-    }
-}
-"""
 
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QLineEdit,
-    QListWidget,
+    QTableWidget,
+    QTableWidgetItem,
+    QTableWidgetItem,
+    QHeaderView,
     QHBoxLayout,
     QPushButton,
     QGroupBox,
@@ -93,15 +72,15 @@ class LibrariesView(QMainWindow):
         # creating a layout for the group box
         self.group_box_layout = QHBoxLayout()
         # list of items
-        items = ["Sci Fi", "Action", "Romance", "Adventure", "Horror", "Comedy"]
+        genre = ["Sci Fi", "Action", "Romance", "Adventure", "Horror", "Comedy"]
         # creating checkboxes and adding them to the group box layout
-        checkboxes = [QCheckBox(item, self.central_widget) for item in items]
-        for checkbox in checkboxes:
+        self.checkboxes = {
+            genre: QCheckBox(genre, self.central_widget) for genre in genre
+        }
+
+        for checkbox in self.checkboxes.values():
             # checkbox = QCheckBox(item, self.central_widget)
             self.group_box_layout.addWidget(checkbox)
-
-        # using dict comprehension to create a dictionary of checkboxes so we can access them later
-        self.checkboxes = {checkbox.text(): checkbox for checkbox in checkboxes}
 
         # setting the layout for the group box
         self.group_box.setLayout(self.group_box_layout)
@@ -109,10 +88,17 @@ class LibrariesView(QMainWindow):
         self.vertical_layout.addWidget(self.group_box)
 
         # adding a list widget to the vertical layout below the search bar
-        self.list_widget = QListWidget(self.central_widget)
+        self.table_widget = QTableWidget(self.central_widget)
+        self.table_widget.setColumnCount(3)
+        self.table_widget.setHorizontalHeaderItem(0, QTableWidgetItem("Name"))
+        self.table_widget.setHorizontalHeaderItem(1, QTableWidgetItem("Keywords"))
+        self.table_widget.setHorizontalHeaderItem(2, QTableWidgetItem("Media"))
+
+        self.table_widget.horizontalHeader().setStretchLastSection(True)
+        self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         # add the list widget to the vertical layout
-        self.vertical_layout.addWidget(self.list_widget)
+        self.vertical_layout.addWidget(self.table_widget)
 
         # adding a group of buttons (Add, Update, Delete)
         self.button_group = QHBoxLayout()

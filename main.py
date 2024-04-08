@@ -1,22 +1,27 @@
 import sys
 
 from PySide6.QtWidgets import QApplication
+from PySide6.QtGui import QScreen
 
-from Controllers import LibrariesController, MediaController, MovieController
-from Models import LibrariesModel, MoviesModel
-from Views import *
+from Controllers import LibrariesController
+from Models import LibrariesModel
+from Views import LibrariesView
 
 
 def libraries_window() -> None:
     app = QApplication(sys.argv)
-    window = LibrariesView()
-    window.show()
 
-    # center the window
+    view = LibrariesView()
+    model = LibrariesModel()
+
+    controller = LibrariesController(view=view, model=model)
+
+    controller.view.show()
+
     center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
-    geo = window.frameGeometry()
+    geo = view.frameGeometry()
     geo.moveCenter(center)
-    window.move(geo.topLeft())
+    view.move(geo.topLeft())
 
     sys.exit(app.exec())
 

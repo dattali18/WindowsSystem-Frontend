@@ -28,7 +28,7 @@ class LibraryController:
         view: LibraryView,
         library_model: LibrariesModel,
         movie_model: MoviesModel,
-        tv_series_model: TVSeriesModel,
+        tv_series_model: TvSeriesModel,
     ):
         self.view = view
         self.library_model = library_model

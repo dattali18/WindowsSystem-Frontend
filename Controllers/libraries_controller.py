@@ -1,15 +1,10 @@
-from Views import *
-from Models import LibrariesModel, MoviesModel, GetLibraryDto
-
-from PySide6.QtWidgets import (
-    QPushButton,
-    QTableWidget,
-    QTableWidgetItem,
-    QHeaderView,
-    QLineEdit,
-)
-
 from typing import Optional
+
+from PySide6.QtWidgets import QTableWidgetItem, QHeaderView
+
+from Views import LibrariesView
+from Models import LibrariesModel
+from Dto import MediaDto, GetLibraryDto
 
 
 class LibrariesController:
@@ -19,8 +14,26 @@ class LibrariesController:
 
         self.libraries: Optional[list[GetLibraryDto]] = []
 
+        self.view.search_button.clicked.connect(self.handle_search)
+        self.view.add_button.clicked.connect(self.handle_create)
+        self.view.update_button.clicked.connect(self.handle_update)
+
+        self.view.table_widget.cellClicked.connect(self.handle_click)
+
+        self.create_random_data_for_debug()
+        self.populate_libraries_table()
+
+    def get_checked_keywords(self):
+        keywords = []
+        for checkbox in self.view.checkboxes.values():
+            if checkbox.isChecked():
+                keywords.append(checkbox.text())
+        return keywords
+
     def handle_search(self):
-        search_term: str = self.search_field.text()
+        search_term: str = self.view.search_bar.text()
+        keywords = self.get_checked_keywords()
+
         if search_term == "":
             self.libraries = self.model.get_libraries()
         else:
@@ -35,39 +48,25 @@ class LibrariesController:
 
     def handle_click(self, row: int, column: int):
         print(f"item clicked at {row=}, {column=}")
-        if self.movie_controller.movie is not None:
-            self.movie_controller.window.show()
 
     def populate_libraries_table(self):
         # deleting all the old entries
-        self.view.libraries_table.setRowCount(0)
+        self.view.table_widget.setRowCount(1)
 
         if self.libraries is None:
             print("404 error please check backend")
             return
 
-        self.view.libraries_table.setColumnCount(3)
-        self.view.libraries_table.setRowCount(len(self.libraries))
-
-        self.view.libraries_table.setHorizontalHeaderItem(0, QTableWidgetItem("Title"))
-        self.view.libraries_table.setHorizontalHeaderItem(
-            1, QTableWidgetItem("Keywords")
-        )
-        self.view.libraries_table.setHorizontalHeaderItem(2, QTableWidgetItem("Media"))
+        self.view.table_widget.setRowCount(len(self.libraries))
 
         for i, library in enumerate(self.libraries):
-            self.view.libraries_table.setItem(i, 0, QTableWidgetItem(library.name))
-            self.view.libraries_table.setItem(
+            self.view.table_widget.setItem(i, 0, QTableWidgetItem(library.name))
+            self.view.table_widget.setItem(
                 i, 1, QTableWidgetItem(", ".join(library.keywords))
             )
-            self.view.libraries_table.setItem(
+            self.view.table_widget.setItem(
                 i, 2, QTableWidgetItem(f"{len(library.media)}")
             )
-
-        self.view.libraries_table.horizontalHeader().setStretchLastSection(True)
-        self.view.libraries_table.horizontalHeader().setSectionResizeMode(
-            QHeaderView.Stretch
-        )
 
     def create_random_data_for_debug(self):
         self.libraries = [

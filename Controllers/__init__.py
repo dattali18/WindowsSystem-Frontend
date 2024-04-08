@@ -1,3 +1,3 @@
 from .libraries_controller import LibrariesController
+from .library_controller import LibraryController
 from .media_controller import MediaController
-from .movie_controller import MovieController
