@@ -117,7 +117,8 @@ if __name__ == "__main__":
 ```
 
 ### Screen Shot (`Mac OS`)
-![[libraries_window_screen_shot.png]]
+![Libraries Window](https://github.com/dattali18/WindowsSystem-Frontend/blob/main/ScreenShots/libraries_window_screen_shot.png)
+
 # Backend - ASP\.NET
 
 The backend is responsible for handling the business logic and providing a RESTful API for the frontend to interact with. It consists of the following components:
