@@ -99,7 +99,7 @@ class LibrariesModel:
             name : str - the name of the library
         Returns:
             Optional[list[GetLibraryDto]] - a list of all libraries
-            in the database with name starting with name in a GetLibrary format
+            in the database with name starting with name in a GetLibraryDto format
             None if response.status_code == 404
         """
         # url = f"http://localhost:{self.PORT}/api/Libraries/search/{name}"
