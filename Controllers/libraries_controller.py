@@ -1,6 +1,5 @@
-from Views import LibrariesViewWindow, MovieViewWindow
+from Views import *
 from Models import LibrariesModel, MoviesModel, GetLibraryDto
-from .movie_controller import MovieController
 
 from PySide6.QtWidgets import (
     QPushButton,
@@ -9,50 +8,16 @@ from PySide6.QtWidgets import (
     QHeaderView,
     QLineEdit,
 )
-from PySide6.QtGui import QAction
 
 from typing import Optional
 
 
 class LibrariesController:
-    def __init__(self, view: LibrariesViewWindow, model: LibrariesModel):
-        self.view = view.ui
-        self.window = view
+    def __init__(self, view: LibrariesView, model: LibrariesModel):
+        self.view = view
         self.model = model
 
-        self.search_field: QLineEdit = self.view.search_field
-
-        self.search_btn: QPushButton = self.view.search_btn
-        self.create_btn: QPushButton = self.view.create_btn
-        self.update_btn: QPushButton = self.view.update_btn
-
-        self.search_action: QAction = self.view.actionSearch
-        self.create_action: QAction = self.view.actionCreate
-        self.update_action: QAction = self.view.actionUpdate
-
-        self.search_btn.clicked.connect(self.handle_search)
-        self.search_action.triggered.connect(self.handle_search)
-
-        self.create_btn.clicked.connect(self.handle_create)
-        self.create_action.triggered.connect(self.handle_create)
-
-        self.update_btn.clicked.connect(self.handle_update)
-        self.update_action.triggered.connect(self.handle_update)
-
-        self.view.libraries_table.setEditTriggers(
-            QTableWidget.EditTrigger.NoEditTriggers
-        )
-
-        self.view.libraries_table.cellClicked.connect(self.handle_click)
-
-        self.movie_controller = MovieController(
-            view=MovieViewWindow(), model=MoviesModel()
-        )
-
-        # self.libraries: Optional[list[GetLibraryDto]] = self.model.get_libraries()
-        # TODO - Remove when not in debug
-        self.create_random_data_for_debug()
-        self.populate_libraries_table()
+        self.libraries: Optional[list[GetLibraryDto]] = []
 
     def handle_search(self):
         search_term: str = self.search_field.text()
