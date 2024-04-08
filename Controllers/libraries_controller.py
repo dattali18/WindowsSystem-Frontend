@@ -32,7 +32,7 @@ class LibrariesController:
 
     def handle_search(self):
         search_term: str = self.view.search_bar.text()
-        keywords = self.get_checked_keywords()
+        # keywords = self.get_checked_keywords()
 
         if search_term == "":
             self.libraries = self.model.get_libraries()
@@ -51,7 +51,7 @@ class LibrariesController:
 
     def populate_libraries_table(self):
         # deleting all the old entries
-        self.view.table_widget.setRowCount(1)
+        self.view.table_widget.setRowCount(0)
 
         if self.libraries is None:
             print("404 error please check backend")

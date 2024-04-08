@@ -97,6 +97,12 @@ class LibrariesView(QMainWindow):
         self.table_widget.horizontalHeader().setStretchLastSection(True)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
+        # disableing the editing of the table
+        self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # setting the selection behavior of the table
+        self.table_widget.setSelectionBehavior(QTableWidget.SelectRows)
+
         # add the list widget to the vertical layout
         self.vertical_layout.addWidget(self.table_widget)
 
