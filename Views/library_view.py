@@ -19,6 +19,8 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QLabel,
     QComboBox,
+    QTableWidget,
+    QTableWidgetItem,
 )
 
 from PySide6.QtCore import Qt
@@ -78,8 +80,19 @@ class LibraryView(QMainWindow):
         self.horizontalLayout.addWidget(self.search_button)
 
         # list of media
-        self.media_list = QListWidget(self.central_widget)
+        self.media_list = QTableWidget(self.central_widget)
         self.vertical_layout.addWidget(self.media_list)
+
+        # setting up the table
+        self.media_list.setColumnCount(4)
+        self.media_list.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
+        self.media_list.horizontalHeader().setStretchLastSection(True)
+
+        # setting the table to be non editable
+        self.media_list.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # setting the table to be single selection
+        self.media_list.setSelectionBehavior(QTableWidget.SelectRows)
 
         # button group
         self.button_group = QHBoxLayout()

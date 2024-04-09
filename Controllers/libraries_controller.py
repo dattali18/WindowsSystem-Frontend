@@ -2,8 +2,15 @@ from typing import Optional
 
 from PySide6.QtWidgets import QTableWidgetItem, QHeaderView
 
-from Views import LibrariesView
-from Models import LibrariesModel
+# for creating a new library
+from .create_library_controller import CreateLibraryController
+# for updating a library, by adding & removing media from it
+from .update_library_controller import UpdateLibraryController
+# for seeing the content of a library
+from .library_controller import LibraryController
+
+from Views import LibrariesView, CreateLibraryView, UpdateLibraryView, LibraryView
+from Models import LibrariesModel, Models
 from Dto import MediaDto, GetLibraryDto
 
 
@@ -42,12 +49,41 @@ class LibrariesController:
 
     def handle_create(self):
         print("create")
+        # will create and show a new create library controller
+        create_library_controller = CreateLibraryController(
+            view=CreateLibraryView(),
+            model=Models(),
+        )
+        create_library_controller.view.show()
 
     def handle_update(self):
+        # getting the selected library
+        selected_rows = self.view.table_widget.selectionModel().selectedRows()
+        if len(selected_rows) == 0:
+            print("No library selected")
+            return
+        library = self.libraries[selected_rows[0].row()]
         print("update")
+        # will create and show a new update library controller
+        update_library_controller = UpdateLibraryController(
+            view=UpdateLibraryView(),
+            model=Models(),
+            library_id=library.id,
+        )
+        update_library_controller.view.show()
 
     def handle_click(self, row: int, column: int):
         print(f"item clicked at {row=}, {column=}")
+        # will create and show a new library controller
+        library = self.libraries[row]
+
+        library_controller = LibraryController(
+            view=LibraryView(),
+            model=self.model,
+            library_id=library.id,
+        )
+        library_controller.view.show()
+
 
     def populate_libraries_table(self):
         # deleting all the old entries
