@@ -21,6 +21,8 @@ from PySide6.QtWidgets import (
     QComboBox,
     QTableWidget,
     QTableWidgetItem,
+    QWidget,
+    QHeaderView,
 )
 
 from PySide6.QtCore import Qt
@@ -45,7 +47,6 @@ class LibraryView(QMainWindow):
         self.title_label = QLabel("Library Name", self.central_widget)
         font = self.title_label.font()
         font.setPointSize(30)
-        font.setBold(True)
         self.title_label.setFont(font)
         self.title_label.setAlignment(Qt.AlignCenter)
 
@@ -80,19 +81,46 @@ class LibraryView(QMainWindow):
         self.horizontalLayout.addWidget(self.search_button)
 
         # list of media
-        self.media_list = QTableWidget(self.central_widget)
-        self.vertical_layout.addWidget(self.media_list)
+        self.media_table = QTableWidget(self.central_widget)
+        self.vertical_layout.addWidget(self.media_table)
 
         # setting up the table
-        self.media_list.setColumnCount(4)
-        self.media_list.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
-        self.media_list.horizontalHeader().setStretchLastSection(True)
+        self.media_table.setColumnCount(4)
+        self.media_table.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
+
+        self.media_table.setProperty("showGrid", True)
+        self.media_table.setProperty("alternatingRowColors", True)
+
+        # separating the header with a thick line
+        self.media_table.setStyleSheet(
+            """
+            QHeaderView::section {
+                font-size: 16px;
+                border: 2px solid transparent;
+                border-bottom-color: #d3d3d3;
+
+                border-left-width: 1px;
+                border-right-width: 1px;
+                border-left-color: #d3d3d3;
+                border-right-color: #d3d3d3;
+            }
+        """
+        )
+
+        # setting up the table header
+        header = self.media_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        header.setStretchLastSection(True)
+
+        # setting up the table to strech to the width of the window
+        self.media_table.horizontalHeader().setStretchLastSection(True)
+        self.media_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         # setting the table to be non editable
-        self.media_list.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.media_table.setEditTriggers(QTableWidget.NoEditTriggers)
 
         # setting the table to be single selection
-        self.media_list.setSelectionBehavior(QTableWidget.SelectRows)
+        self.media_table.setSelectionBehavior(QTableWidget.SelectRows)
 
         # button group
         self.button_group = QHBoxLayout()

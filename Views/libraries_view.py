@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame
 
 
 class LibrariesView(QMainWindow):
@@ -93,6 +94,25 @@ class LibrariesView(QMainWindow):
         self.table_widget.setHorizontalHeaderItem(0, QTableWidgetItem("Name"))
         self.table_widget.setHorizontalHeaderItem(1, QTableWidgetItem("Keywords"))
         self.table_widget.setHorizontalHeaderItem(2, QTableWidgetItem("Media"))
+
+        self.table_widget.setProperty("showGrid", True)
+        self.table_widget.setProperty("alternatingRowColors", True)
+
+        # separating the header with a thick line
+        self.table_widget.setStyleSheet(
+            """
+            QHeaderView::section {
+                font-size: 16px;
+                border: 2px solid transparent;
+                border-bottom-color: #d3d3d3;
+
+                border-left-width: 1px;
+                border-right-width: 1px;
+                border-left-color: #d3d3d3;
+                border-right-color: #d3d3d3;
+            }
+        """
+        )
 
         self.table_widget.horizontalHeader().setStretchLastSection(True)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

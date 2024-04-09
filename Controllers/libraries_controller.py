@@ -4,8 +4,10 @@ from PySide6.QtWidgets import QTableWidgetItem, QHeaderView
 
 # for creating a new library
 from .create_library_controller import CreateLibraryController
+
 # for updating a library, by adding & removing media from it
 from .update_library_controller import UpdateLibraryController
+
 # for seeing the content of a library
 from .library_controller import LibraryController
 
@@ -21,14 +23,33 @@ class LibrariesController:
 
         self.libraries: Optional[list[GetLibraryDto]] = []
 
+        self.update_library_controller = UpdateLibraryController(
+            view=UpdateLibraryView(),
+            model=Models(),
+            library_id=0,
+        )
+
+        self.create_library_controller = CreateLibraryController(
+            view=CreateLibraryView(),
+            model=Models(),
+        )
+
+        self.library_controller = LibraryController(
+            view=LibraryView(),
+            model=Models(),
+            library_id=0,
+        )
+
         self.view.search_button.clicked.connect(self.handle_search)
         self.view.add_button.clicked.connect(self.handle_create)
         self.view.update_button.clicked.connect(self.handle_update)
 
-        self.view.table_widget.cellClicked.connect(self.handle_click)
+        # self.view.table_widget.cellClicked.connect(self.handle_click)
+        self.view.table_widget.cellDoubleClicked.connect(self.handle_click)
 
-        self.create_random_data_for_debug()
-        self.populate_libraries_table()
+        # self.create_random_data_for_debug()
+        # self.populate_libraries_table()
+        self.handle_search()
 
     def get_checked_keywords(self):
         keywords = []
@@ -50,11 +71,7 @@ class LibrariesController:
     def handle_create(self):
         print("create")
         # will create and show a new create library controller
-        create_library_controller = CreateLibraryController(
-            view=CreateLibraryView(),
-            model=Models(),
-        )
-        create_library_controller.view.show()
+        self.create_library_controller.view.show()
 
     def handle_update(self):
         # getting the selected library
@@ -65,25 +82,18 @@ class LibrariesController:
         library = self.libraries[selected_rows[0].row()]
         print("update")
         # will create and show a new update library controller
-        update_library_controller = UpdateLibraryController(
-            view=UpdateLibraryView(),
-            model=Models(),
-            library_id=library.id,
-        )
-        update_library_controller.view.show()
+        self.update_library_controller.library_id = library.id
+        self.update_library_controller.view.show()
 
     def handle_click(self, row: int, column: int):
         print(f"item clicked at {row=}, {column=}")
         # will create and show a new library controller
         library = self.libraries[row]
 
-        library_controller = LibraryController(
-            view=LibraryView(),
-            model=self.model,
-            library_id=library.id,
-        )
-        library_controller.view.show()
+        self.library_controller.library_id = library.id
+        self.library_controller.show()
 
+        # self.view.close()
 
     def populate_libraries_table(self):
         # deleting all the old entries
