@@ -1,8 +1,10 @@
+from typing import Optional
+
 from PySide6.QtWidgets import QTableWidgetItem
 
-from Views import LibraryView
+from .media_controller import MediaController
+from Views import LibraryView, MediaView
 from Models import Models, MediaDto, GetLibraryDto
-from typing import Optional
 
 
 class LibraryController:
@@ -32,8 +34,11 @@ class LibraryController:
         self.library: Optional[GetLibraryDto] = None
         self.media: Optional[list[MediaDto]] = None
 
-        # contecting to signal
+        self.media_controller = MediaController(MediaView())
+
+        # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
+        self.view.media_table.doubleClicked.connect(self.handle_media_click)
 
     def show(self):
         self.fetch_library()
@@ -87,3 +92,8 @@ class LibraryController:
             self.media = [x for x in self.media if x["type"].lower() == "series"]
 
         self.populate_media_table()
+
+    def handle_media_click(self, row: int, column: int):
+        media = self.media[row]
+        self.media_controller.media = media
+        self.media_controller.show()

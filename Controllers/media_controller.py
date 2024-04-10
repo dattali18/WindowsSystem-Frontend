@@ -1,6 +1,3 @@
-from Views import MediaView
-from Models import Models, MediaDto, ImageModel
-
 from PySide6.QtWidgets import (
     QPushButton,
     QTableWidget,
@@ -15,18 +12,23 @@ from PySide6.QtCore import Qt
 
 from typing import Optional
 
+from Views import MediaView
+from Models import Models, MediaDto, ImageModel
+
 
 class MediaController:
-    def __init__(self, view: MediaView, media: Optional[MediaDto]):
+    def __init__(self, view: MediaView, media: Optional[MediaDto]) -> None:
         self.view = view
         self.media: Optional[MediaDto] = media
 
+    def show(self) -> None:
         if self.media == None:
             self.create_dummy_data()
         else:
             self.set_media()
+        self.view.show()
 
-    def set_media(self):
+    def set_media(self) -> None:
         if self.media == None:
             return
 
@@ -38,7 +40,7 @@ class MediaController:
 
         self.set_image()
 
-    def set_image(self):
+    def set_image(self) -> None:
         if self.media == None:
             return
 
@@ -54,7 +56,7 @@ class MediaController:
         self.view.media_image.setAlignment(Qt.AlignCenter)
         self.view.media_image.setPixmap(pixmap)
 
-    def create_dummy_data(self):
+    def create_dummy_data(self) -> None:
         self.media = MediaDto(
             title="The Matrix",
             type="Movie",
@@ -64,6 +66,3 @@ class MediaController:
             poster="https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_SX300.jpg",
         )
         self.set_media()
-
-    def show(self):
-        self.view.show()
