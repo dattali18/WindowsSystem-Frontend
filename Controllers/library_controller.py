@@ -38,7 +38,7 @@ class LibraryController:
 
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
-        self.view.media_table.doubleClicked.connect(self.handle_media_click)
+        self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
 
     def show(self):
         self.fetch_library()

@@ -32,6 +32,8 @@ class MediaController:
         if self.media == None:
             return
 
+        self.media = MediaDto(**self.media)
+
         self.view.title_label.setText(f"{self.media.title}")
         self.view.media_year.setText(f"Year:\t{self.media.year}")
         self.view.media_rating.setText(f"Ratings:\t{self.media.rating}")
