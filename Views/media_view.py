@@ -70,19 +70,18 @@ class MediaView(QMainWindow):
         font.setPointSize(15)
         self.media_details_group.setFont(font)
 
-
         # setting up the media details
         self.media_year = QLabel("Year: ")
         self.media_details_layout.addWidget(self.media_year)
 
-        self.media_genre = QLabel("Genre: ")
-        self.media_details_layout.addWidget(self.media_genre)
-
         self.media_rating = QLabel("Rating: ")
         self.media_details_layout.addWidget(self.media_rating)
 
-        self.imdb_id = QLabel("IMDB: ")
-        self.media_details_layout.addWidget(self.imdb_id)
+        self.media_type = QLabel("Type: ")
+        self.media_details_layout.addWidget(self.media_type)
+
+        self.media_imdb_id = QLabel("IMDB: ")
+        self.media_details_layout.addWidget(self.media_imdb_id)
 
         self.h_layout.addWidget(self.media_details_group)
 
@@ -91,17 +90,17 @@ class MediaView(QMainWindow):
         # setting the image to take half the width of the window and 80% of the height
         self.media_image.setFixedSize(400, 480)
         # load the example image from /static/images/movie_poster.jpg
-        pix_map: QPixmap = QPixmap("static/images/movie_poster.jpg")
+        # pix_map: QPixmap = QPixmap("static/images/movie_poster.jpg")
         # setting up the aspect ratio of the image
-        pix_map = pix_map.scaled(
-            self.media_image.width(),
-            self.media_image.height(),
-            Qt.KeepAspectRatio,
-            Qt.FastTransformation,
-        )
+        # pix_map = pix_map.scaled(
+        #     self.media_image.width(),
+        #     self.media_image.height(),
+        #     Qt.KeepAspectRatio,
+        #     Qt.FastTransformation,
+        # )
         # centering the image in the label
-        self.media_image.setAlignment(Qt.AlignCenter)
-        self.media_image.setPixmap(pix_map)
+        # self.media_image.setAlignment(Qt.AlignCenter)
+        # self.media_image.setPixmap(pix_map)
         self.h_layout.addWidget(self.media_image)
 
         # setting up the main widget
