@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication
 
 # internal imports
 from Tests import *
-from Models import MoviesModel, LibrariesModel
+from Models import MoviesModel
 from Controllers import MediaController
 from Views import MediaView
 
@@ -16,7 +16,6 @@ def test_media_controller():
     app = QApplication(sys.argv)
 
     view = MediaView()
-    model = MoviesModel()
     controller = MediaController(view, None)
 
     controller.show()
@@ -25,7 +24,8 @@ def test_media_controller():
 
 
 def main():
-    test_media_controller()
+    # test_media_controller()
+    print("testing")
 
 
 if __name__ == "__main__":
