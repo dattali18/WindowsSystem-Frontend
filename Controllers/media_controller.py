@@ -17,9 +17,9 @@ from Models import Models, MediaDto, ImageModel
 
 
 class MediaController:
-    def __init__(self, view: MediaView, media: Optional[MediaDto]) -> None:
+    def __init__(self, view: MediaView) -> None:
         self.view = view
-        self.media: Optional[MediaDto] = media
+        self.media: Optional[MediaDto] = None
 
     def show(self) -> None:
         if self.media == None:
