@@ -29,7 +29,7 @@ class MoviesModel:
             if response.status_code == 200:
                 json_str = response.text
                 json_obj = json.loads(json_str)
-                return [MediaDto(**obj) for obj in json_obj]
+                return [MovieDto(**obj) for obj in json_obj]
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
         return None
@@ -120,7 +120,7 @@ class MoviesModel:
             if response.status_code in {200, 201}:
                 json_str = response.text
                 json_obj = json.loads(json_str)
-                return MediaDto(**json_obj)
+                return MovieDto(**json_obj)
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
         return None

@@ -53,7 +53,7 @@ def test_get_libraries_name(name: str = "My") -> None:
 
 def test_post_libraries() -> None:
     library: CreateLibraryDto = CreateLibraryDto(
-        name="My Library II", keywords=["Action, Sci Fi"]
+        name="My Library III", keywords=["Action, Sci Fi"]
     )
     library_response: Optional[GetLibraryDto] = libraries_model.post_libraries(
         library=library
@@ -96,10 +96,10 @@ def test_delete_libraries_tvseries(id: int = 1, imdbID: str = "tt2934286") -> No
 
 def test_put_libraries_id() -> None:
     library: CreateLibraryDto = CreateLibraryDto(
-        name="My Library II", keywords=["Action"]
+        name="Daniel's Library", keywords=["Horror"]
     )
     library_response: Optional[CreateLibraryDto] = libraries_model.put_libraries_id(
-        id=1, library=library
+        id=7, library=library
     )
     if not library_response:
         print("There was an error")

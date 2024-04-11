@@ -235,7 +235,7 @@ class LibrariesModel:
 
     def put_libraries_id(
         self, id: int, library: CreateLibraryDto
-    ) -> Optional[GetLibraryDto]:
+    ) -> Optional[CreateLibraryDto]:
         """
         PUT - /api/Libraries/{id}
         Args:
@@ -246,15 +246,15 @@ class LibrariesModel:
             None if response.status_code == 404
         """
         # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
-        url = f"{self.BASE_URL}/Libraries/{id}"
-        data = CreateLibraryDto.__dict__
+        url = f"{self.BASE_URL}/Libraries?id={id}"
+        data = library.__dict__
 
         try:
             response = requests.put(url, timeout=5, json=data)
             if response.status_code == 200:
                 json_str = response.text
                 json_obj = json.loads(json_str)
-                return GetLibraryDto(**json_obj)
+                return CreateLibraryDto(**json_obj)
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
         return None
