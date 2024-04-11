@@ -8,7 +8,6 @@ from .config import BASE_URL
 from Models import MediaDto, MovieDto
 
 
-
 class MoviesModel:
     """Model Class for the Movie Entity"""
 
@@ -22,13 +21,17 @@ class MoviesModel:
             Optional[list[Movie]] - a list of all movies in the database in the Movie format
             None if response.status_code == 404
         """
-        url = f"{self.BASE_URL}/Movies"
 
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [MediaDto(**obj) for obj in json_obj]
+        url = f"{self.BASE_URL}/Movies"
+        # url = http://localhost:{self.PORT}/api/Movies/
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [MediaDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_movie_id(self, id: int) -> Optional[MovieDto]:
@@ -42,11 +45,14 @@ class MoviesModel:
         """
         url = f"{self.BASE_URL}/Movies/{id}"
         # url = f"http://localhost:{self.PORT}/api/Movies/{id}"
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return MovieDto(**json_obj)
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return MovieDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[MovieDto]:
@@ -60,11 +66,14 @@ class MoviesModel:
         """
         url = f"{self.BASE_URL}/Movies/search/{imdbID}"
         # url = f"http://localhost:{self.PORT}/api/Movies/search/{imdbID}"
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return MovieDto(**json_obj)
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return MovieDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_movies_search(
@@ -80,15 +89,18 @@ class MoviesModel:
             None if response.status_code == 404
         """
         # url = f"http://localhost:{self.PORT}/api/Movies/search/?s={s}"
-        url = f"{self.BASE_URL}/Movies/search/?s={s}"
-        if y:
-            url += f"&y={y}"
+        try:
+            url = f"{self.BASE_URL}/Movies/search/?s={s}"
+            if y:
+                url += f"&y={y}"
 
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [MediaDto(**obj) for obj in json_obj]
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [MediaDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def post_movie(self, imdbID: str) -> Optional[MovieDto]:
@@ -103,9 +115,12 @@ class MoviesModel:
         # url = f"http://localhost:{self.PORT}/api/Movies?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Movies?imdbID={imdbID}"
 
-        response = requests.post(url)
-        if response.status_code in {200, 201}:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return MediaDto(**json_obj)
+        try:
+            response = requests.post(url, timeout=5)
+            if response.status_code in {200, 201}:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return MediaDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None

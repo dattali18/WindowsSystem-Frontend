@@ -92,20 +92,20 @@ class LibraryView(QMainWindow):
         self.media_table.setProperty("alternatingRowColors", True)
 
         # separating the header with a thick line
-        self.media_table.setStyleSheet(
-            """
-            QHeaderView::section {
-                font-size: 16px;
-                border: 2px solid transparent;
-                border-bottom-color: #d3d3d3;
+        # self.media_table.setStyleSheet(
+        #     """
+        #     QHeaderView::section {
+        #         font-size: 16px;
+        #         border: 2px solid transparent;
+        #         border-bottom-color: #d3d3d3;
 
-                border-left-width: 1px;
-                border-right-width: 1px;
-                border-left-color: #d3d3d3;
-                border-right-color: #d3d3d3;
-            }
-        """
-        )
+        #         border-left-width: 1px;
+        #         border-right-width: 1px;
+        #         border-left-color: #d3d3d3;
+        #         border-right-color: #d3d3d3;
+        #     }
+        # """
+        # )
 
         # setting up the table header
         header = self.media_table.horizontalHeader()

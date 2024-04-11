@@ -10,14 +10,3 @@ class ImageModel:
     # def post_image(self, image: bytes):
     #     pass
 
-
-"""
-def getAndSetImageFromURL(self, imageURL):
-    request = requests.get(imageURL)
-    self.pixmap.loadFromData(request.content)
-    width = self.view.menubar.width()
-    height = self.view.menubar.height()
-    self.pixmap = self.pixmap.scaled(width // 2, width, QtCore.Qt.KeepAspectRatio)
-    self.image.setPixmap(self.pixmap)
-
-"""

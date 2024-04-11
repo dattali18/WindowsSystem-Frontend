@@ -23,12 +23,14 @@ class LibrariesModel:
         """
         # url = f"http://localhost:{self.PORT}/api/Libraries"
         url = f"{self.BASE_URL}/Libraries"
-
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [GetLibraryDto(**obj) for obj in json_obj]
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [GetLibraryDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_library_id(self, id: int) -> Optional[GetLibraryDto]:
@@ -43,12 +45,14 @@ class LibrariesModel:
         """
         # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
         url = f"{self.BASE_URL}/Libraries/{id}"
-
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return GetLibraryDto(**json_obj)
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return GetLibraryDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_library_movies(self, id: int) -> Optional[list[MediaDto]]:
@@ -64,12 +68,15 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
         url = f"{self.BASE_URL}/Libraries/{id}/movies"
 
-        response = requests.get(url)
-        response.raise_for_status()
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [MediaDto(**obj) for obj in json_obj]
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [MediaDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_library_tvseries(self, id: int) -> Optional[list[MediaDto]]:
@@ -84,12 +91,14 @@ class LibrariesModel:
         """
         # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/tvseries"
         url = f"{self.BASE_URL}/Libraries/{id}/tvseries"
-
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [MediaDto(**obj) for obj in json_obj]
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [MediaDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def get_libraries_name(self, name: str) -> Optional[list[GetLibraryDto]]:
@@ -105,11 +114,14 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/search/{name}"
         url = f"{self.BASE_URL}/Libraries/search/{name}"
 
-        response = requests.get(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return [GetLibraryDto(**obj) for obj in json_obj]
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [GetLibraryDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def post_libraries(self, library: CreateLibraryDto) -> Optional[GetLibraryDto]:
@@ -125,11 +137,14 @@ class LibrariesModel:
         url = f"{self.BASE_URL}/Libraries"
         data = library.__dict__
 
-        response = requests.post(url, json=data)
-        if response.status_code == 201:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return GetLibraryDto(**json_obj)
+        try:
+            response = requests.post(url, timeout=5, json=data)
+            if response.status_code == 201:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return GetLibraryDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def post_libraries_movies(self, library_id: int, imdbID: str) -> Optional[MediaDto]:
@@ -145,11 +160,14 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
-        response = requests.post(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return MediaDto(**json_obj)
+        try:
+            response = requests.post(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return MediaDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def post_libraries_tvseries(
@@ -167,11 +185,14 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
-        response = requests.post(url)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return MediaDto(**json_obj)
+        try:
+            response = requests.post(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return MediaDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def delete_libraries_movies(self, library_id: int, imdbID: str) -> bool:
@@ -186,8 +207,12 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
-        response = requests.delete(url)
-        return response.status_code == 204
+        try:
+            response = requests.delete(url, timeout=5)
+            return response.status_code == 204
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        return False
 
     def delete_libraries_tvseries(self, library_id: int, imdbID: str) -> bool:
         """
@@ -201,8 +226,12 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
-        response = requests.delete(url)
-        return response.status_code == 204
+        try:
+            response = requests.delete(url, timeout=5)
+            return response.status_code == 204
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        return False
 
     def put_libraries_id(
         self, id: int, library: CreateLibraryDto
@@ -220,11 +249,14 @@ class LibrariesModel:
         url = f"{self.BASE_URL}/Libraries/{id}"
         data = CreateLibraryDto.__dict__
 
-        response = requests.put(url, json=data)
-        if response.status_code == 200:
-            json_str = response.text
-            json_obj = json.loads(json_str)
-            return GetLibraryDto(**json_obj)
+        try:
+            response = requests.put(url, timeout=5, json=data)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return GetLibraryDto(**json_obj)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
         return None
 
     def delete_libraries_id(self, id: int) -> bool:
@@ -238,5 +270,9 @@ class LibrariesModel:
         # url = f"http://localhost:{self.PORT}/api/Libraries?id={id}"
         url = f"{self.BASE_URL}/Libraries?id={id}"
 
-        response = requests.delete(url)
-        return response.status_code == 204
+        try:
+            response = requests.delete(url, timeout=5)
+            return response.status_code == 204
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        return False
