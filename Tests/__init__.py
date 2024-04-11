@@ -20,3 +20,4 @@ from .libraries_api_tests import (
     test_post_libraries_tvseries,
     test_put_libraries_id,
 )
+from .image_api_tests import test_get_image, test_post_image
