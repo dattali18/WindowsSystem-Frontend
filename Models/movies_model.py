@@ -18,7 +18,7 @@ class MoviesModel:
         """
         GET - /api/Movies
         Returns:
-            Optional[list[Movie]] - a list of all movies in the database in the Movie format
+            Optional[list[MovieDto]] - a list of all movies in the database in the Movie format
             None if response.status_code == 404
         """
 
@@ -57,7 +57,7 @@ class MoviesModel:
 
     def get_movie_imdbID(self, imdbID: str) -> Optional[MovieDto]:
         """
-        GET - /api/Movies/{imdbID}
+        GET - /api/Movies/search/{imdbID}
         Args:
             imdbID: str - the imdbID of the movie in the database
         Returns:
