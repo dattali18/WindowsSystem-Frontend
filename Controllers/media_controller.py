@@ -1,19 +1,10 @@
-from PySide6.QtWidgets import (
-    QPushButton,
-    QTableWidget,
-    QTableWidgetItem,
-    QHeaderView,
-    QLineEdit,
-    QComboBox,
-)
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt
-
 
 from typing import Optional
 
 from Views import MediaView
-from Models import Models, MediaDto, ImageModel
+from Models import MediaDto, ImageModel
 
 
 class MediaController:
@@ -22,14 +13,14 @@ class MediaController:
         self.media: Optional[MediaDto] = None
 
     def show(self) -> None:
-        if self.media == None:
+        if not self.media:
             self.create_dummy_data()
         else:
             self.set_media()
         self.view.show()
 
     def set_media(self) -> None:
-        if self.media == None:
+        if not self.media:
             return
 
         self.media = MediaDto(**self.media)
@@ -43,7 +34,7 @@ class MediaController:
         self.set_image()
 
     def set_image(self) -> None:
-        if self.media == None:
+        if not self.media:
             return
 
         image = ImageModel().get_image(self.media.poster)
