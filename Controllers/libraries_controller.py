@@ -1,6 +1,6 @@
 from typing import Optional
 
-from PySide6.QtWidgets import QTableWidgetItem, QHeaderView
+from PySide6.QtWidgets import QTableWidgetItem
 
 # for creating a new library
 from .create_library_controller import CreateLibraryController
@@ -13,7 +13,7 @@ from .library_controller import LibraryController
 
 from Views import LibrariesView, CreateLibraryView, UpdateLibraryView, LibraryView
 from Models import LibrariesModel, Models
-from Dto import MediaDto, GetLibraryDto
+from Dto import GetLibraryDto
 
 
 class LibrariesController:
@@ -37,7 +37,6 @@ class LibrariesController:
         self.library_controller = LibraryController(
             view=LibraryView(),
             model=Models(),
-            library_id=0,
         )
 
         self.view.search_button.clicked.connect(self.handle_search)
@@ -106,7 +105,8 @@ class LibrariesController:
         self.view.table_widget.setRowCount(len(self.libraries))
 
         for i, library in enumerate(self.libraries):
-            self.view.table_widget.setItem(i, 0, QTableWidgetItem(library.name))
+            self.view.table_widget.setItem(
+                i, 0, QTableWidgetItem(library.name))
             self.view.table_widget.setItem(
                 i, 1, QTableWidgetItem(", ".join(library.keywords))
             )

@@ -15,7 +15,12 @@ class LibraryController:
     and handling book checkouts and returns.
 
     Attributes:
-        None
+        view: LibraryView
+        model: Models
+        library_id: Optional[int]
+        library: Optional[GetLibraryDto]
+        media: Optional[list[MediaDto]]
+        media_controller: MediaController
 
     Methods:
         To be defined.
@@ -25,11 +30,10 @@ class LibraryController:
         self,
         view: LibraryView,
         model: Models,
-        library_id: int,
     ):
         self.view = view
         self.model = model
-        self.library_id = library_id
+        self.library_id: Optional[int] = None
 
         self.library: Optional[GetLibraryDto] = None
         self.media: Optional[list[MediaDto]] = None
@@ -38,7 +42,8 @@ class LibraryController:
 
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
-        self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
+        self.view.media_table.cellDoubleClicked.connect(
+            self.handle_media_click)
 
     def show(self):
         self.fetch_library()
@@ -46,6 +51,10 @@ class LibraryController:
         self.view.show()
 
     def fetch_library(self):
+        if not self.library_id:
+            print("No Library Id found")
+            return
+
         self.library = self.model.libraries.get_library_id(self.library_id)
 
         if self.library is None:
@@ -68,11 +77,13 @@ class LibraryController:
 
         self.view.media_table.setRowCount(len(self.media))
 
+        self.media = MediaDto(**self.media)
+
         for i, media in enumerate(self.media):
-            self.view.media_table.setItem(i, 0, QTableWidgetItem(media["title"]))
-            self.view.media_table.setItem(i, 1, QTableWidgetItem(media["year"]))
-            self.view.media_table.setItem(i, 2, QTableWidgetItem(media["type"]))
-            self.view.media_table.setItem(i, 3, QTableWidgetItem(media["imdbID"]))
+            self.view.media_table.setItem(i, 0, QTableWidgetItem(media.title))
+            self.view.media_table.setItem(i, 1, QTableWidgetItem(media.year))
+            self.view.media_table.setItem(i, 2, QTableWidgetItem(media.type))
+            self.view.media_table.setItem(i, 3, QTableWidgetItem(media.imdbID))
 
     def handle_search(self):
         search_term = self.view.search_bar.text()
@@ -86,10 +97,12 @@ class LibraryController:
         filter = self.view.filter_combo.currentText()
         if filter == "Movies":
             # self.media = self.media.filter(lambda x: x.type.lower() == "movie")
-            self.media = [x for x in self.media if x["type"].lower() == "movie"]
+            self.media = [x for x in self.media if x["type"].lower()
+                          == "movie"]
         elif filter == "TV Series":
             # self.media = self.media.filter(lambda x: x.type.lower() == "series")
-            self.media = [x for x in self.media if x["type"].lower() == "series"]
+            self.media = [x for x in self.media if x["type"].lower()
+                          == "series"]
 
         self.populate_media_table()
 
