@@ -4,6 +4,7 @@ from Views import CreateLibraryView
 from Models import LibrariesModel
 from Views.update_library_view import UpdateLibraryView
 
+
 class CreateLibraryController:
     def __init__(self, view: CreateLibraryView, model: LibrariesModel) -> None:
         self.view = view
