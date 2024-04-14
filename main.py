@@ -3,18 +3,20 @@ import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QScreen
 
-from Controllers import LibrariesController
+from Controllers import LibrariesController, CreateLibraryController
 from Models import LibrariesModel
-from Views import LibrariesView
+from Views import LibrariesView, CreateLibraryView
 
 
 def libraries_window() -> None:
     app = QApplication(sys.argv)
 
-    view = LibrariesView()
+    #view = LibrariesView()
+    view = CreateLibraryView()
     model = LibrariesModel()
 
-    controller = LibrariesController(view=view, model=model)
+    #controller = LibrariesController(view=view, model=model)
+    controller = CreateLibraryController(view=view, model=model)
 
     controller.view.show()
 
