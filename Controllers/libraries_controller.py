@@ -11,7 +11,12 @@ from .update_library_controller import UpdateLibraryController
 # for seeing the content of a library
 from .library_controller import LibraryController
 
-from Views import LibrariesView, CreateLibraryView, UpdateLibraryView, LibraryView
+from Views import (
+    LibrariesView,
+    CreateLibraryView,
+    UpdateLibraryView,
+    LibraryView
+)
 from Models import LibrariesModel, Models
 from Dto import GetLibraryDto
 

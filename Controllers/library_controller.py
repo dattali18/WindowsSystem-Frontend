@@ -4,15 +4,17 @@ from PySide6.QtWidgets import QTableWidgetItem
 
 from .media_controller import MediaController
 from Views import LibraryView, MediaView
-from Models import Models, MediaDto, GetLibraryDto
+from Models import LibrariesModel, MediaDto, GetLibraryDto
 
 
 class LibraryController:
     """
-    The LibraryController class is responsible for managing the operations of the library window.
+    The LibraryController class is responsible for managing the operations of
+    the library window.
 
-    This includes tasks such as adding, removing, or updating books in the library, managing user accounts,
-    and handling book checkouts and returns.
+
+    This includes tasks such as adding, removing, or updating books in the
+    library, managing user accounts, and handling book checkouts and returns.
 
     Attributes:
         view: LibraryView
@@ -29,7 +31,7 @@ class LibraryController:
     def __init__(
         self,
         view: LibraryView,
-        model: Models,
+        model: LibrariesModel,
     ):
         self.view = view
         self.model = model
@@ -47,7 +49,7 @@ class LibraryController:
 
     def show(self):
         self.fetch_library()
-        self.setUpWidgets()
+        self.set_up_ui()
         self.view.show()
 
     def fetch_library(self):
@@ -63,8 +65,9 @@ class LibraryController:
             self.view.close()
 
         self.media = self.library.media
+        self.media = [MediaDto(**media) for media in self.media]
 
-    def setUpWidgets(self):
+    def set_up_ui(self):
         if self.library is None:
             return
 
@@ -78,8 +81,6 @@ class LibraryController:
             return
 
         self.view.media_table.setRowCount(len(self.media))
-
-        self.media = MediaDto(**self.media)
 
         for i, media in enumerate(self.media):
             self.view.media_table.setItem(i, 0, QTableWidgetItem(media.title))

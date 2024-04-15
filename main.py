@@ -9,18 +9,23 @@ from Views import LibrariesView, CreateLibraryView
 
 
 def create_library_window() -> None:
-    pass
+    app = QApplication(sys.argv)
+
+    view = CreateLibraryView()
+    model = LibrariesModel()
+
+    controller = CreateLibraryController(view=view, model=model)
+    controller.show()
+    sys.exit(app.exec())
 
 
 def libraries_window() -> None:
     app = QApplication(sys.argv)
 
-    # view = LibrariesView()
-    view = CreateLibraryView()
+    view = LibrariesView()
     model = LibrariesModel()
 
-    # controller = LibrariesController(view=view, model=model)
-    controller = CreateLibraryController(view=view, model=model)
+    controller = LibrariesController(view=view, model=model)
 
     controller.view.show()
 
