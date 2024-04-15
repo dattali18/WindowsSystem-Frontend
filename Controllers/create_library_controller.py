@@ -3,6 +3,7 @@ from Dto.create_library_dto import CreateLibraryDto
 from Views import CreateLibraryView
 from Models import LibrariesModel, Models
 from Views.update_library_view import UpdateLibraryView
+from PySide6.QtWidgets import QMessageBox
 
 
 class CreateLibraryController:
@@ -17,7 +18,9 @@ class CreateLibraryController:
     def handle_create_click(self) -> None:
         lib_name = self.view.name_text.text()
         if lib_name == "":
-            # TODO: research pop up windows
+            QMessageBox.information(
+                self, "Error", "Cannot create Library with empty name!"
+            )
             return
 
         genres = [k for k, v in self.view.checkboxes_dict if v.isChecked()]
