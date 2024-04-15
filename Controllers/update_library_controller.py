@@ -92,111 +92,123 @@ class UpdateLibraryController:
         self.populate_search_table()
 
     def handle_add(self):
-        # all rows selected
-        selected_medias = set()
-        for media in self.view.search_media_table.selectedItems():
-            selected_medias.add(media.row())
+        # get the current selected row on search media table
+        selected_row: int = self.view.search_media_table.currentRow()
 
-        if len(selected_medias) == 0:
+        # handle if no row is selected
+        if selected_row == -1:
             QMessageBox.information(self, "Error", "Need to select Media to add!")
             return
 
-        # get imdbID and type
-        selected_row = next(iter(selected_medias))
-        selected_type = self.view.search_media_table.item(selected_row, 2).text()
-        selected_imdbID = self.view.search_media_table.item(selected_row, 3).text()
+        # get imdbID and type of the selected row
+
+        selected_imdbID = self.search_results[selected_row].imdbID
+        selected_type = self.search_results[selected_row].type
+
+        dto: Optional[MediaDto] = None
 
         if selected_type == "Movies":
             dto = self.model.libraries.post_libraries_movies(
                 library_id=self.library_id, imdbID=selected_imdbID
-            ) 
+            )
         else:
             dto = self.model.libraries.post_libraries_tvseries(
                 library_id=self.library_id, imdbID=selected_imdbID
             )
-        
+
         if dto is None:
             print("404 error please check backend")
             return
-        
-        self.media.append(dto)
 
+        # recall the media from the backend
+        self.fetch_library()
         self.populate_media_table()
 
     def handle_remove(self):
-        # all rows selected
-        selected_medias = set()
-        for media in self.view.search_media_table.selectedItems():
-            selected_medias.add(media.row())
+        # get the selected row
+        selected_row: int = self.view.media_table.currentRow()
 
-        if len(selected_medias) == 0:
-            QMessageBox.information(self, "Error", "Need to select Media to add!")
+        # handle if no row is selected
+        if selected_row == -1:
+            QMessageBox.information(self, "Error", "Need to select Media to remove!")
             return
 
-        # get imdbID and type
-        selected_row = next(iter(selected_medias))
-        selected_type = self.view.search_media_table.item(selected_row, 2).text()
-        selected_imdbID = self.view.search_media_table.item(selected_row, 3).text()
+        selected_imdbID = self.media[selected_row].imdbID
+        selected_type = self.media[selected_row].type
+
+        success: bool = False
 
         if selected_type == "Movies":
-            dto = self.model.libraries.delete_libraries_movies(
-                library_id=self.library_id, imdbID=selected_imdbID
-            ) 
-        else:
-            dto = self.model.libraries.delete_libraries_tvseries(
+            success = self.model.libraries.delete_libraries_movies(
                 library_id=self.library_id, imdbID=selected_imdbID
             )
-        
-        if not dto:
+        else:
+            success = self.model.libraries.delete_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+
+        if not success:
             print("404 error please check backend")
             return
-        
-        self.media.remove(lambda m: m.imdbID == selected_imdbID)
 
+        # recall the fetch methods
+        self.fetch_library()
         self.populate_media_table()
 
     def handle_media_click(self, row, col):
-        selected_imdbID = self.view.media_table.item(row=row, column=3)
-        selected_type = self.view.media_table.item(row=row, column=2)
+        # get the selected row
+        selected_row: int = self.view.media_table.currentRow()
+
+        # handle if no row is selected
+        if selected_row == -1:
+            QMessageBox.information(self, "Error", "Need to select Media to remove!")
+            return
+
+        selected_imdbID = self.media[selected_row].imdbID
+        selected_type = self.media[selected_row].type
+
+        success: bool = False
+
+        if selected_type == "Movies":
+            success = self.model.libraries.delete_libraries_movies(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+        else:
+            success = self.model.libraries.delete_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+
+        if not success:
+            print("404 error please check backend")
+            return
+
+        # recall the fetch methods
+        self.fetch_library()
+        self.populate_media_table()
+
+    def handle_search_click(self, row, col):
+        # get imdbID and type of the selected row
+        selected_imdbID = self.search_results[row].imdbID
+        selected_type = self.search_results[row].type
+
+        dto: Optional[MediaDto] = None
 
         if selected_type == "Movies":
             dto = self.model.libraries.post_libraries_movies(
                 library_id=self.library_id, imdbID=selected_imdbID
-            ) 
+            )
         else:
             dto = self.model.libraries.post_libraries_tvseries(
                 library_id=self.library_id, imdbID=selected_imdbID
             )
-        
+
         if dto is None:
             print("404 error please check backend")
             return
-        
-        self.media.append(dto)
 
-        self.populate_media_table()
-        
-
-    def handle_search_click(self, row, col):
-        selected_imdbID = self.view.media_table.item(row=row, column=3)
-        selected_type = self.view.media_table.item(row=row, column=2)
-
-        if selected_type == "Movies":
-            dto = self.model.libraries.delete_libraries_movies(
-                library_id=self.library_id, imdbID=selected_imdbID
-            ) 
-        else:
-            dto = self.model.libraries.delete_libraries_tvseries(
-                library_id=self.library_id, imdbID=selected_imdbID
-            )
-        
-        if not dto:
-            print("404 error please check backend")
-            return
-        
-        self.media.remove(lambda m: m.imdbID == selected_imdbID)
-
+        # recall the media from the backend
+        self.fetch_library()
         self.populate_media_table()
 
     def handle_update(self):
-        pass
+        self.view.close()
