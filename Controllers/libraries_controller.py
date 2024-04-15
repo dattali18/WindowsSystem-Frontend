@@ -85,7 +85,7 @@ class LibrariesController:
         print("update")
         # will create and show a new update library controller
         self.update_library_controller.library_id = library.id
-        self.update_library_controller.view.show()
+        self.update_library_controller.show()
 
     def handle_click(self, row: int, column: int):
         print(f"item clicked at {row=}, {column=}")
