@@ -38,7 +38,7 @@ class LibraryController:
         self.library: Optional[GetLibraryDto] = None
         self.media: Optional[list[MediaDto]] = None
 
-        self.media_controller = MediaController(MediaView())
+        self.media_controller = MediaController(view=MediaView())
 
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
@@ -72,6 +72,8 @@ class LibraryController:
         self.populate_media_table()
 
     def populate_media_table(self):
+        self.view.media_table.setRowCount(0)
+
         if self.media is None:
             return
 
@@ -90,17 +92,14 @@ class LibraryController:
         if search_term == "":
             self.media = self.library.media
         else:
-            # self.media = self.media.filter(lambda x: search_term in x.title)
             self.media = [x for x in self.media if search_term in x.title]
 
         # handle the combo box choice
         filter = self.view.filter_combo.currentText()
         if filter == "Movies":
-            # self.media = self.media.filter(lambda x: x.type.lower() == "movie")
             self.media = [x for x in self.media if x["type"].lower()
                           == "movie"]
         elif filter == "TV Series":
-            # self.media = self.media.filter(lambda x: x.type.lower() == "series")
             self.media = [x for x in self.media if x["type"].lower()
                           == "series"]
 

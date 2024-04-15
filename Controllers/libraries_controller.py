@@ -43,7 +43,6 @@ class LibrariesController:
         self.view.add_button.clicked.connect(self.handle_create)
         self.view.update_button.clicked.connect(self.handle_update)
 
-        # self.view.table_widget.cellClicked.connect(self.handle_click)
         self.view.table_widget.cellDoubleClicked.connect(self.handle_click)
 
         # self.create_random_data_for_debug()

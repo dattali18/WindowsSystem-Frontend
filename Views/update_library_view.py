@@ -32,8 +32,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QComboBox,
     QPushButton,
-    QListView,
-    QWidget,
+    QTableWidget,
 )
 
 
@@ -82,7 +81,7 @@ class UpdateLibraryView(QMainWindow):
 
         # combo box for Movies/Tv Series search
         self.filter_combo = QComboBox(self.central_widget)
-        self.filter_combo.addItem("All")
+        # self.filter_combo.addItem("All")
         self.filter_combo.addItem("Movies")
         self.filter_combo.addItem("TV Series")
 
@@ -96,8 +95,8 @@ class UpdateLibraryView(QMainWindow):
         self.inner_vertical_layout.addLayout(self.inner_horizontal_layout)
 
         # list view
-        self.search_media_list = QListView(self.central_widget)
-        self.inner_vertical_layout.addWidget(self.search_media_list)
+        self.search_media_table = QTableWidget(self.central_widget)
+        self.inner_vertical_layout.addWidget(self.search_media_table)
 
         self.horizontalLayout.addLayout(self.inner_vertical_layout)
 
@@ -108,7 +107,7 @@ class UpdateLibraryView(QMainWindow):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
 
         # list view
-        self.media_list = QListView(self.central_widget)
+        self.media_table = QTableWidget(self.central_widget)
 
         # buttons
         self.add_button = QPushButton("Add", self.central_widget)
@@ -120,7 +119,7 @@ class UpdateLibraryView(QMainWindow):
         self.horizontalLayout_2.addWidget(self.remove_button)
         self.horizontalLayout_2.addWidget(self.update_button)
 
-        self.vertical_layout.addWidget(self.media_list)
+        self.vertical_layout.addWidget(self.media_table)
 
         self.vertical_layout.addLayout(self.horizontalLayout_2)
 
