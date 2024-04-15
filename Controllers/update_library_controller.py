@@ -22,8 +22,10 @@ class UpdateLibraryController:
         self.view.search_button.clicked.connect(self.handle_search)
         self.view.add_button.clicked.connect(self.handle_add)
         self.view.remove_button.clicked.connect(self.handle_remove)
-        self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
-        self.view.search_media_table.cellDoubleClicked.connect(self.handle_search_click)
+        self.view.media_table.cellDoubleClicked.connect(
+            self.handle_media_click)
+        self.view.search_media_table.cellDoubleClicked.connect(
+            self.handle_search_click)
         self.view.update_button.clicked.connect(self.handle_update)
 
     def show(self) -> None:
@@ -59,10 +61,14 @@ class UpdateLibraryController:
         self.view.search_media_table.setRowCount(len(self.search_results))
 
         for i, media in enumerate(self.search_results):
-            self.view.search_media_table.setItem(i, 0, QTableWidgetItem(media.title))
-            self.view.search_media_table.setItem(i, 1, QTableWidgetItem(media.year))
-            self.view.search_media_table.setItem(i, 2, QTableWidgetItem(media.type))
-            self.view.search_media_table.setItem(i, 3, QTableWidgetItem(media.imdbID))
+            self.view.search_media_table.setItem(
+                i, 0, QTableWidgetItem(media.title))
+            self.view.search_media_table.setItem(
+                i, 1, QTableWidgetItem(media.year))
+            self.view.search_media_table.setItem(
+                i, 2, QTableWidgetItem(media.type))
+            self.view.search_media_table.setItem(
+                i, 3, QTableWidgetItem(media.imdbID))
 
     def populate_media_table(self):
         self.view.media_table.setRowCount(0)
@@ -85,9 +91,11 @@ class UpdateLibraryController:
         media_type = self.view.filter_combo.currentText()
 
         if media_type == "Movies":
-            self.search_results = self.model.movies.get_movies_search(search_text)
+            self.search_results = self.model.movies.get_movies_search(
+                search_text)
         else:
-            self.search_results = self.model.tvseries.get_tv_series_search(search_text)
+            self.search_results = self.model.tvseries.get_tv_series_search(
+                search_text)
 
         self.populate_media_table()
 
@@ -97,7 +105,8 @@ class UpdateLibraryController:
 
         # handle if no row is selected
         if selected_row == -1:
-            QMessageBox.information(self, "Error", "Need to select Media to add!")
+            QMessageBox.information(
+                self, "Error", "Need to select Media to add!")
             return
 
         # get imdbID and type of the selected row
@@ -130,7 +139,8 @@ class UpdateLibraryController:
 
         # handle if no row is selected
         if selected_row == -1:
-            QMessageBox.information(self, "Error", "Need to select Media to remove!")
+            QMessageBox.information(
+                self, "Error", "Need to select Media to remove!")
             return
 
         selected_imdbID = self.media[selected_row].imdbID
@@ -161,7 +171,8 @@ class UpdateLibraryController:
 
         # handle if no row is selected
         if selected_row == -1:
-            QMessageBox.information(self, "Error", "Need to select Media to remove!")
+            QMessageBox.information(
+                self, "Error", "Need to select Media to remove!")
             return
 
         selected_imdbID = self.media[selected_row].imdbID

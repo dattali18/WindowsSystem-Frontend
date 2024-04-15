@@ -31,7 +31,6 @@ class LibrariesController:
         self.update_library_controller = UpdateLibraryController(
             view=UpdateLibraryView(),
             model=Models(),
-            library_id=0,
         )
 
         self.create_library_controller = CreateLibraryController(
