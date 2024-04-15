@@ -1,5 +1,9 @@
+from typing import Optional
+from Dto.get_library_dto import GetLibraryDto
+from Dto.media_dto import MediaDto
 from Views import UpdateLibraryView
 from Models import Models
+from PySide6.QtWidgets import QTableWidgetItem, QMessageBox
 
 
 class UpdateLibraryController:
@@ -19,15 +23,15 @@ class UpdateLibraryController:
         self.view.add_button.clicked.connect(self.handle_add)
         self.view.remove_button.clicked.connect(self.handle_remove)
         self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
-        self.view.search_table.cellDoubleClicked.connect(self.handle_search_click)
+        self.view.search_media_table.cellDoubleClicked.connect(self.handle_search_click)
         self.view.update_button.clicked.connect(self.handle_update)
 
-    def show() -> None:
+    def show(self) -> None:
         self.fetch_library()
         self.populate_tables()
         self.view.show()
 
-    def fetch_library() -> None:
+    def fetch_library(self) -> None:
         if not self.library_id:
             print("No Library Id found")
             return
@@ -41,6 +45,158 @@ class UpdateLibraryController:
 
         self.media = self.library.media
 
-    def populate_tables() -> None:
-        self.populate_media_table()
+    def populate_tables(self) -> None:
         self.populate_search_table()
+        self.populate_media_table()
+
+    def populate_search_table(self):
+        self.view.search_media_table.setRowCount(0)
+
+        if self.search_results is None:
+            print("404 error please check backend")
+            return
+
+        self.view.search_media_table.setRowCount(len(self.search_results))
+
+        for i, media in enumerate(self.search_results):
+            self.view.search_media_table.setItem(i, 0, QTableWidgetItem(media.title))
+            self.view.search_media_table.setItem(i, 1, QTableWidgetItem(media.year))
+            self.view.search_media_table.setItem(i, 2, QTableWidgetItem(media.type))
+            self.view.search_media_table.setItem(i, 3, QTableWidgetItem(media.imdbID))
+
+    def populate_media_table(self):
+        self.view.media_table.setRowCount(0)
+
+        if self.media is None:
+            print("404 error please check backend")
+            return
+
+        self.view.media_table.setRowCount(len(self.media))
+
+        for i, media in enumerate(self.media):
+            self.view.media_table.setItem(i, 0, QTableWidgetItem(media.title))
+            self.view.media_table.setItem(i, 1, QTableWidgetItem(media.year))
+            self.view.media_table.setItem(i, 2, QTableWidgetItem(media.type))
+            self.view.media_table.setItem(i, 3, QTableWidgetItem(media.imdbID))
+
+    def handle_search(self):
+        search_text = self.view.search_bar.text()
+
+        media_type = self.view.filter_combo.currentText()
+
+        if media_type == "Movies":
+            self.search_results = self.model.movies.get_movies_search(search_text)
+        else:
+            self.search_results = self.model.tvseries.get_tv_series_search(search_text)
+
+        self.populate_search_table()
+
+    def handle_add(self):
+        # all rows selected
+        selected_medias = set()
+        for media in self.view.search_media_table.selectedItems():
+            selected_medias.add(media.row())
+
+        if len(selected_medias) == 0:
+            QMessageBox.information(self, "Error", "Need to select Media to add!")
+            return
+
+        # get imdbID and type
+        selected_row = next(iter(selected_medias))
+        selected_type = self.view.search_media_table.item(selected_row, 2).text()
+        selected_imdbID = self.view.search_media_table.item(selected_row, 3).text()
+
+        if selected_type == "Movies":
+            dto = self.model.libraries.post_libraries_movies(
+                library_id=self.library_id, imdbID=selected_imdbID
+            ) 
+        else:
+            dto = self.model.libraries.post_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+        
+        if dto is None:
+            print("404 error please check backend")
+            return
+        
+        self.media.append(dto)
+
+        self.populate_media_table()
+
+    def handle_remove(self):
+        # all rows selected
+        selected_medias = set()
+        for media in self.view.search_media_table.selectedItems():
+            selected_medias.add(media.row())
+
+        if len(selected_medias) == 0:
+            QMessageBox.information(self, "Error", "Need to select Media to add!")
+            return
+
+        # get imdbID and type
+        selected_row = next(iter(selected_medias))
+        selected_type = self.view.search_media_table.item(selected_row, 2).text()
+        selected_imdbID = self.view.search_media_table.item(selected_row, 3).text()
+
+        if selected_type == "Movies":
+            dto = self.model.libraries.delete_libraries_movies(
+                library_id=self.library_id, imdbID=selected_imdbID
+            ) 
+        else:
+            dto = self.model.libraries.delete_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+        
+        if not dto:
+            print("404 error please check backend")
+            return
+        
+        self.media.remove(lambda m: m.imdbID == selected_imdbID)
+
+        self.populate_media_table()
+
+    def handle_media_click(self, row, col):
+        selected_imdbID = self.view.media_table.item(row=row, column=3)
+        selected_type = self.view.media_table.item(row=row, column=2)
+
+        if selected_type == "Movies":
+            dto = self.model.libraries.post_libraries_movies(
+                library_id=self.library_id, imdbID=selected_imdbID
+            ) 
+        else:
+            dto = self.model.libraries.post_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+        
+        if dto is None:
+            print("404 error please check backend")
+            return
+        
+        self.media.append(dto)
+
+        self.populate_media_table()
+        
+
+    def handle_search_click(self, row, col):
+        selected_imdbID = self.view.media_table.item(row=row, column=3)
+        selected_type = self.view.media_table.item(row=row, column=2)
+
+        if selected_type == "Movies":
+            dto = self.model.libraries.delete_libraries_movies(
+                library_id=self.library_id, imdbID=selected_imdbID
+            ) 
+        else:
+            dto = self.model.libraries.delete_libraries_tvseries(
+                library_id=self.library_id, imdbID=selected_imdbID
+            )
+        
+        if not dto:
+            print("404 error please check backend")
+            return
+        
+        self.media.remove(lambda m: m.imdbID == selected_imdbID)
+
+        self.populate_media_table()
+
+    def handle_update(self):
+        pass
