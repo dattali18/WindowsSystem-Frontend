@@ -63,12 +63,12 @@ def update_library_window() -> None:
     app = QApplication(sys.argv)
 
     view = UpdateLibraryView()
-    #view = UpdateLibraryView()
-    #model = Models()
+    view = UpdateLibraryView()
+    model = Models()
 
-    #controller = UpdateLibraryController(view=view, model=model, library_id=1)
+    controller = UpdateLibraryController(view=view, model=model, library_id=1)
 
-    #controller.view.show()
+    controller.view.show()
     view.show()
 
     center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
@@ -80,7 +80,7 @@ def update_library_window() -> None:
 
 
 def main() -> None:
-    update_library_window()
+    libraries_window()
 
 
 if __name__ == "__main__":

@@ -139,7 +139,7 @@ class LibrariesModel:
 
         try:
             response = requests.post(url, timeout=5, json=data)
-            if response.status_code == 201:
+            if response != 404:
                 json_str = response.text
                 json_obj = json.loads(json_str)
                 return GetLibraryDto(**json_obj)
@@ -162,7 +162,7 @@ class LibrariesModel:
 
         try:
             response = requests.post(url, timeout=5)
-            if response.status_code == 200:
+            if response.status_code != 404:
                 json_str = response.text
                 json_obj = json.loads(json_str)
                 return MediaDto(**json_obj)
@@ -187,7 +187,7 @@ class LibrariesModel:
 
         try:
             response = requests.post(url, timeout=5)
-            if response.status_code == 200:
+            if response.status_code != 404:
                 json_str = response.text
                 json_obj = json.loads(json_str)
                 return MediaDto(**json_obj)
@@ -251,7 +251,7 @@ class LibrariesModel:
 
         try:
             response = requests.put(url, timeout=5, json=data)
-            if response.status_code == 200:
+            if response.status_code != 404:
                 json_str = response.text
                 json_obj = json.loads(json_str)
                 return CreateLibraryDto(**json_obj)

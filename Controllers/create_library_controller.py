@@ -23,9 +23,11 @@ class CreateLibraryController:
             )
             return
 
-        genres = [k for k, v in self.view.checkboxes_dict if v.isChecked()]
+        # get all the genere names from the checkboxes
+        genres = [k for k, v in self.view.checkboxes_dict.items() if v.isChecked()]
 
         dto = CreateLibraryDto(name=lib_name, keywords=genres)
+        print(dto)
         library = self.model.post_libraries(library=dto)
 
         if library is None:
@@ -35,5 +37,5 @@ class CreateLibraryController:
         self.update_library_controller = UpdateLibraryController(
             view=UpdateLibraryView(), model=Models(), library_id=library.id
         )
-        # self.update_library_controller.library_id = library.id
         self.update_library_controller.show()
+        self.view.close()

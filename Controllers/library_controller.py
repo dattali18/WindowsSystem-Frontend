@@ -44,8 +44,7 @@ class LibraryController:
 
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
-        self.view.media_table.cellDoubleClicked.connect(
-            self.handle_media_click)
+        self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
 
     def show(self):
         self.fetch_library()
@@ -57,7 +56,7 @@ class LibraryController:
             print("No Library Id found")
             return
 
-        self.library = self.model.libraries.get_library_id(self.library_id)
+        self.library = self.model.get_library_id(self.library_id)
 
         if self.library is None:
             print("404 error - library not found")
@@ -98,11 +97,9 @@ class LibraryController:
         # handle the combo box choice
         filter = self.view.filter_combo.currentText()
         if filter == "Movies":
-            self.media = [x for x in self.media if x["type"].lower()
-                          == "movie"]
+            self.media = [x for x in self.media if x["type"].lower() == "movie"]
         elif filter == "TV Series":
-            self.media = [x for x in self.media if x["type"].lower()
-                          == "series"]
+            self.media = [x for x in self.media if x["type"].lower() == "series"]
 
         self.populate_media_table()
 

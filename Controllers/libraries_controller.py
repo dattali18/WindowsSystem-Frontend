@@ -11,12 +11,7 @@ from .update_library_controller import UpdateLibraryController
 # for seeing the content of a library
 from .library_controller import LibraryController
 
-from Views import (
-    LibrariesView,
-    CreateLibraryView,
-    UpdateLibraryView,
-    LibraryView
-)
+from Views import LibrariesView, CreateLibraryView, UpdateLibraryView, LibraryView
 from Models import LibrariesModel, Models
 from Dto import GetLibraryDto
 
@@ -31,21 +26,23 @@ class LibrariesController:
         self.update_library_controller = UpdateLibraryController(
             view=UpdateLibraryView(),
             model=Models(),
+            library_id=None,
         )
 
         self.create_library_controller = CreateLibraryController(
             view=CreateLibraryView(),
-            model=Models(),
+            model=LibrariesModel(),
         )
 
         self.library_controller = LibraryController(
             view=LibraryView(),
-            model=Models(),
+            model=LibrariesModel(),
         )
 
         self.view.search_button.clicked.connect(self.handle_search)
         self.view.add_button.clicked.connect(self.handle_create)
         self.view.update_button.clicked.connect(self.handle_update)
+        self.view.delete_button.clicked.connect(self.handle_delete)
 
         self.view.table_widget.cellDoubleClicked.connect(self.handle_click)
 
@@ -70,6 +67,21 @@ class LibrariesController:
             self.libraries = self.model.get_libraries_name(name=search_term)
         self.populate_libraries_table()
 
+    def handle_delete(self):
+        selected_row: int = self.view.table_widget.currentRow()
+        if selected_row == -1:
+            print("No library selected")
+            return
+        library = self.libraries[selected_row]
+        print("delete")
+
+        success: bool = self.model.delete_libraries_id(id=library.id)
+        if not success:
+            print("Error deleting library")
+            return
+
+        self.handle_search()
+
     def handle_create(self):
         print("create")
         # will create and show a new create library controller
@@ -77,11 +89,11 @@ class LibrariesController:
 
     def handle_update(self):
         # getting the selected library
-        selected_rows = self.view.table_widget.selectionModel().selectedRows()
-        if len(selected_rows) == 0:
+        selected_row: int = self.view.table_widget.currentRow()
+        if selected_row == -1:
             print("No library selected")
             return
-        library = self.libraries[selected_rows[0].row()]
+        library = self.libraries[selected_row]
         print("update")
         # will create and show a new update library controller
         self.update_library_controller.library_id = library.id
@@ -108,8 +120,7 @@ class LibrariesController:
         self.view.table_widget.setRowCount(len(self.libraries))
 
         for i, library in enumerate(self.libraries):
-            self.view.table_widget.setItem(
-                i, 0, QTableWidgetItem(library.name))
+            self.view.table_widget.setItem(i, 0, QTableWidgetItem(library.name))
             self.view.table_widget.setItem(
                 i, 1, QTableWidgetItem(", ".join(library.keywords))
             )

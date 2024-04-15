@@ -33,6 +33,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QPushButton,
     QTableWidget,
+    QHeaderView,
 )
 
 
