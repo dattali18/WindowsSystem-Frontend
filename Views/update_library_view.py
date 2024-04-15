@@ -98,6 +98,31 @@ class UpdateLibraryView(QMainWindow):
         self.search_media_table = QTableWidget(self.central_widget)
         self.inner_vertical_layout.addWidget(self.search_media_table)
 
+        # setting up the table
+        self.search_media_table.setColumnCount(4)
+        self.search_media_table.setHorizontalHeaderLabels(
+            ["Title", "Year", "Type", "imdb ID"]
+        )
+
+        self.search_media_table.setProperty("showGrid", True)
+        self.search_media_table.setProperty("alternatingRowColors", True)
+
+        header = self.search_media_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        header.setStretchLastSection(True)
+
+        # setting up the table to stretch to the width of the window
+        self.search_media_table.horizontalHeader().setStretchLastSection(True)
+        self.search_media_table.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+
+        # setting the table to be non editable
+        self.search_media_table.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # setting the table to be single selection
+        self.search_media_table.setSelectionBehavior(QTableWidget.SelectRows)
+
         self.horizontalLayout.addLayout(self.inner_vertical_layout)
 
         self.vertical_layout.addLayout(self.horizontalLayout)
@@ -108,6 +133,28 @@ class UpdateLibraryView(QMainWindow):
 
         # list view
         self.media_table = QTableWidget(self.central_widget)
+
+        # setting up the table
+        self.media_table.setColumnCount(4)
+        self.media_table.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
+
+        self.media_table.setProperty("showGrid", True)
+        self.media_table.setProperty("alternatingRowColors", True)
+
+        # setting up the table header
+        header = self.media_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        header.setStretchLastSection(True)
+
+        # setting up the table to stretch to the width of the window
+        self.media_table.horizontalHeader().setStretchLastSection(True)
+        self.media_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        # setting the table to be non editable
+        self.media_table.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # setting the table to be single selection
+        self.media_table.setSelectionBehavior(QTableWidget.SelectRows)
 
         # buttons
         self.add_button = QPushButton("Add", self.central_widget)

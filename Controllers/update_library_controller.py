@@ -89,7 +89,7 @@ class UpdateLibraryController:
         else:
             self.search_results = self.model.tvseries.get_tv_series_search(search_text)
 
-        self.populate_search_table()
+        self.populate_media_table()
 
     def handle_add(self):
         # get the current selected row on search media table

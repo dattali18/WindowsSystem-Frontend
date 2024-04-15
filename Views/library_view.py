@@ -112,7 +112,7 @@ class LibraryView(QMainWindow):
         header.setSectionResizeMode(QHeaderView.Stretch)
         header.setStretchLastSection(True)
 
-        # setting up the table to strech to the width of the window
+        # setting up the table to stretch to the width of the window
         self.media_table.horizontalHeader().setStretchLastSection(True)
         self.media_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
