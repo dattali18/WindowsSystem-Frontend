@@ -7,7 +7,11 @@ class GetLibraryDto:
     def __init__(self, id: int, name: str, keywords: str, media: list[MediaDto]):
         self.id = id
         self.name = name
-        self.keywords = keywords.split(",")
+        # handle the case we recive an empty string
+        if keywords == "":
+            self.keywords = []
+        else:
+            self.keywords = keywords.split(",")
         self.media = media
 
     def __repr__(self) -> str:

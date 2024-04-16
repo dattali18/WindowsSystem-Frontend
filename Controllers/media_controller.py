@@ -23,11 +23,8 @@ class MediaController:
         if not self.media:
             return
 
-        self.media = MediaDto(**self.media)
-
         self.view.title_label.setText(f"{self.media.title}")
         self.view.media_year.setText(f"Year:\t{self.media.year}")
-        self.view.media_rating.setText(f"Ratings:\t{self.media.rating}")
         self.view.media_imdb_id.setText(f"Imdb ID:\t{self.media.imdbID}")
         self.view.media_type.setText(f"Type:\t{self.media.type}")
 

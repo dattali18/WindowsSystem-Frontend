@@ -3,7 +3,8 @@ from typing import Optional
 from PySide6.QtWidgets import QTableWidgetItem
 
 from .media_controller import MediaController
-from Views import LibraryView, MediaView
+from .create_library_controller import CreateLibraryController
+from Views import LibraryView, MediaView, CreateLibraryView
 from Models import LibrariesModel, MediaDto, GetLibraryDto
 
 
@@ -41,6 +42,9 @@ class LibraryController:
         self.media: Optional[list[MediaDto]] = None
 
         self.media_controller = MediaController(view=MediaView())
+        self.create_library_controller = CreateLibraryController(
+            view=CreateLibraryView(), model=LibrariesModel()
+        )
 
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
@@ -98,9 +102,9 @@ class LibraryController:
         # handle the combo box choice
         filter = self.view.filter_combo.currentText()
         if filter == "Movies":
-            self.media = [x for x in self.media if x["type"].lower() == "movie"]
+            self.media = [x for x in self.media if x.type.lower() == "movie"]
         elif filter == "TV Series":
-            self.media = [x for x in self.media if x["type"].lower() == "series"]
+            self.media = [x for x in self.media if x.type.lower() == "series"]
 
         self.populate_media_table()
 
@@ -110,5 +114,8 @@ class LibraryController:
         self.media_controller.show()
 
     def handle_update(self):
-        # TODO: Implement this method
-        pass
+        if self.library is None:
+            return
+        self.create_library_controller.library_id = self.library_id
+        self.create_library_controller.show()
+        self.view.close()
