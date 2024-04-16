@@ -45,6 +45,7 @@ class LibraryController:
         # connecting to signal
         self.view.search_button.clicked.connect(self.handle_search)
         self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
+        self.view.update_button.clicked.connect(self.handle_update)
 
     def show(self):
         self.fetch_library()
@@ -107,3 +108,7 @@ class LibraryController:
         media = self.media[row]
         self.media_controller.media = media
         self.media_controller.show()
+
+    def handle_update(self):
+        # TODO: Implement this method
+        pass

@@ -235,12 +235,13 @@ class LibrariesModel:
 
     def put_libraries_id(
         self, id: int, library: CreateLibraryDto
-    ) -> Optional[CreateLibraryDto]:
+    ) -> Optional[GetLibraryDto]:
         """
         PUT - /api/Libraries/{id}
         Args:
             id : int - the library id of the library we want to change
-            library: CreateLibraryDto -  the library data transfer object for creating the library
+            library: CreateLibraryDto -  the library data transfer object
+            for creating the library
         Returns:
             Optional[GetLibraryDto] - a library object that was changed
             None if response.status_code == 404
@@ -254,7 +255,7 @@ class LibrariesModel:
             if response.status_code != 404:
                 json_str = response.text
                 json_obj = json.loads(json_str)
-                return CreateLibraryDto(**json_obj)
+                return GetLibraryDto(**json_obj)
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
         return None
