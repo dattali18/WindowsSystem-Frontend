@@ -10,17 +10,12 @@ from PySide6.QtWidgets import QMainWindow
 
 from PySide6.QtWidgets import (
     QVBoxLayout,
-    QWidget,
     QLineEdit,
-    QListWidget,
     QHBoxLayout,
     QPushButton,
-    QGroupBox,
-    QCheckBox,
     QLabel,
     QComboBox,
     QTableWidget,
-    QTableWidgetItem,
     QWidget,
     QHeaderView,
 )
@@ -33,7 +28,7 @@ class LibraryView(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Media Library")
-        self.setGeometry(0, 0, 1200, 800)
+        self.setGeometry(120, 50, 1200, 800)
 
         # creating the widgets
         # main vertical layout
@@ -86,26 +81,11 @@ class LibraryView(QMainWindow):
 
         # setting up the table
         self.media_table.setColumnCount(4)
-        self.media_table.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
+        self.media_table.setHorizontalHeaderLabels(
+            ["Title", "Year", "Type", "imdb ID"])
 
         self.media_table.setProperty("showGrid", True)
         self.media_table.setProperty("alternatingRowColors", True)
-
-        # separating the header with a thick line
-        # self.media_table.setStyleSheet(
-        #     """
-        #     QHeaderView::section {
-        #         font-size: 16px;
-        #         border: 2px solid transparent;
-        #         border-bottom-color: #d3d3d3;
-
-        #         border-left-width: 1px;
-        #         border-right-width: 1px;
-        #         border-left-color: #d3d3d3;
-        #         border-right-color: #d3d3d3;
-        #     }
-        # """
-        # )
 
         # setting up the table header
         header = self.media_table.horizontalHeader()
@@ -114,7 +94,8 @@ class LibraryView(QMainWindow):
 
         # setting up the table to stretch to the width of the window
         self.media_table.horizontalHeader().setStretchLastSection(True)
-        self.media_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.media_table.horizontalHeader()\
+            .setSectionResizeMode(QHeaderView.Stretch)
 
         # setting the table to be non editable
         self.media_table.setEditTriggers(QTableWidget.NoEditTriggers)

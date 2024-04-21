@@ -22,11 +22,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QHBoxLayout,
     QGroupBox,
-    QPushButton,
-    QCheckBox,
-    QLineEdit,
 )
-from PySide6.QtGui import QPixmap
 
 from PySide6.QtCore import Qt
 
@@ -37,7 +33,7 @@ class MediaView(QMainWindow):
 
         # setting up the ui
         self.setWindowTitle("Media Info")
-        self.setGeometry(0, 0, 800, 600)
+        self.setGeometry(120, 50, 800, 600)
 
         # setting up central widget
         self.central_widget = QWidget(self)
@@ -74,9 +70,6 @@ class MediaView(QMainWindow):
         self.media_year = QLabel("Year: ")
         self.media_details_layout.addWidget(self.media_year)
 
-        self.media_rating = QLabel("Rating: ")
-        self.media_details_layout.addWidget(self.media_rating)
-
         self.media_type = QLabel("Type: ")
         self.media_details_layout.addWidget(self.media_type)
 
@@ -87,20 +80,10 @@ class MediaView(QMainWindow):
 
         # setting up the image of the media
         self.media_image = QLabel()
-        # setting the image to take half the width of the window and 80% of the height
+        # setting the image to take half the
+        # width of the window and 80% of the height
         self.media_image.setFixedSize(400, 480)
-        # load the example image from /static/images/movie_poster.jpg
-        # pix_map: QPixmap = QPixmap("static/images/movie_poster.jpg")
-        # setting up the aspect ratio of the image
-        # pix_map = pix_map.scaled(
-        #     self.media_image.width(),
-        #     self.media_image.height(),
-        #     Qt.KeepAspectRatio,
-        #     Qt.FastTransformation,
-        # )
         # centering the image in the label
-        # self.media_image.setAlignment(Qt.AlignCenter)
-        # self.media_image.setPixmap(pix_map)
         self.h_layout.addWidget(self.media_image)
 
         # setting up the main widget

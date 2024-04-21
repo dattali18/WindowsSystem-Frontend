@@ -24,8 +24,7 @@ def test_media_controller():
 
 
 def main():
-    # test_media_controller()
-    print("testing")
+    test_media_controller()
 
 
 if __name__ == "__main__":

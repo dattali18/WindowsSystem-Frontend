@@ -42,7 +42,7 @@ class UpdateLibraryView(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Update Library")
-        self.setGeometry(0, 0, 1200, 800)
+        self.setGeometry(120, 50, 1200, 800)
 
         # creating the widgets
         # main vertical layout
@@ -137,7 +137,8 @@ class UpdateLibraryView(QMainWindow):
 
         # setting up the table
         self.media_table.setColumnCount(4)
-        self.media_table.setHorizontalHeaderLabels(["Title", "Year", "Type", "imdb ID"])
+        self.media_table.setHorizontalHeaderLabels(
+            ["Title", "Year", "Type", "imdb ID"])
 
         self.media_table.setProperty("showGrid", True)
         self.media_table.setProperty("alternatingRowColors", True)

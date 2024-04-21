@@ -73,7 +73,6 @@ class LibrariesController:
             print("No library selected")
             return
         library = self.libraries[selected_row]
-        print("delete")
 
         success: bool = self.model.delete_libraries_id(id=library.id)
         if not success:
@@ -83,7 +82,6 @@ class LibrariesController:
         self.handle_search()
 
     def handle_create(self):
-        print("create")
         # will create and show a new create library controller
         self.create_library_controller.view.show()
 
@@ -94,13 +92,11 @@ class LibrariesController:
             print("No library selected")
             return
         library = self.libraries[selected_row]
-        print("update")
         # will create and show a new update library controller
         self.update_library_controller.library_id = library.id
         self.update_library_controller.show()
 
     def handle_click(self, row: int, column: int):
-        print(f"item clicked at {row=}, {column=}")
         # will create and show a new library controller
         library = self.libraries[row]
 

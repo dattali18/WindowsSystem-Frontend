@@ -7,7 +7,6 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QTableWidget,
     QTableWidgetItem,
-    QTableWidgetItem,
     QHeaderView,
     QHBoxLayout,
     QPushButton,
@@ -16,7 +15,6 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QFrame
 
 
 class LibrariesView(QMainWindow):
@@ -25,7 +23,7 @@ class LibrariesView(QMainWindow):
         self.setWindowTitle("Media Library System")
 
         # open the window at the center of the screen
-        self.setGeometry(0, 0, 1200, 800)
+        self.setGeometry(120, 50, 1200, 800)
 
         # creating the widgets
         # main vertical layout
@@ -43,7 +41,8 @@ class LibrariesView(QMainWindow):
         font = self.title_label.font()
         font.setPointSize(30)
         self.title_label.setFont(font)
-        self.title_label.setAlignment(Qt.AlignCenter)  # align the text to the center
+        # align the text to the center
+        self.title_label.setAlignment(Qt.AlignCenter)
 
         # add the title label to the vertical layout
         self.vertical_layout.addWidget(self.title_label)
@@ -53,7 +52,8 @@ class LibrariesView(QMainWindow):
         # search bar
         self.search_bar = QLineEdit(self.central_widget)
         self.search_bar.setPlaceholderText("Search for library by name")
-        self.search_bar.setStyleSheet("QLineEdit { padding: 5px; }")  # setting padding
+        self.search_bar.setStyleSheet(
+            "QLineEdit { padding: 5px; }")  # setting padding
         # search button
         self.search_button = QPushButton("Search", self.central_widget)
 
@@ -73,7 +73,8 @@ class LibrariesView(QMainWindow):
         # creating a layout for the group box
         self.group_box_layout = QHBoxLayout()
         # list of items
-        genre = ["Sci Fi", "Action", "Romance", "Adventure", "Horror", "Comedy"]
+        genre = ["Sci Fi", "Action", "Romance",
+                 "Adventure", "Horror", "Comedy"]
         # creating checkboxes and adding them to the group box layout
         self.checkboxes = {
             genre: QCheckBox(genre, self.central_widget) for genre in genre
@@ -92,7 +93,8 @@ class LibrariesView(QMainWindow):
         self.table_widget = QTableWidget(self.central_widget)
         self.table_widget.setColumnCount(3)
         self.table_widget.setHorizontalHeaderItem(0, QTableWidgetItem("Name"))
-        self.table_widget.setHorizontalHeaderItem(1, QTableWidgetItem("Keywords"))
+        self.table_widget.setHorizontalHeaderItem(
+            1, QTableWidgetItem("Keywords"))
         self.table_widget.setHorizontalHeaderItem(2, QTableWidgetItem("Media"))
 
         self.table_widget.setProperty("showGrid", True)
@@ -115,7 +117,8 @@ class LibrariesView(QMainWindow):
         # )
 
         self.table_widget.horizontalHeader().setStretchLastSection(True)
-        self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table_widget.horizontalHeader()\
+            .setSectionResizeMode(QHeaderView.Stretch)
 
         # disableing the editing of the table
         self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)

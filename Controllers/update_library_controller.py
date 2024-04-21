@@ -203,8 +203,6 @@ class UpdateLibraryController:
         selected_imdbID = self.search_results[row].imdbID
         selected_type = self.search_results[row].type
 
-        print(f"{selected_imdbID=} {selected_type=}")
-
         dto: Optional[MediaDto] = None
 
         if selected_type == "movie":
