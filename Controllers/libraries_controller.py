@@ -12,6 +12,7 @@ from .update_library_controller import UpdateLibraryController
 from .library_controller import LibraryController
 
 from Views import LibrariesView, CreateLibraryView, UpdateLibraryView, LibraryView
+
 from Models import LibrariesModel, Models
 from Dto import GetLibraryDto
 
@@ -74,7 +75,7 @@ class LibrariesController:
             "Delete Library",
             "Are you sure you want to delete this library?",
             QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No
+            QMessageBox.No,
         )
 
         if confirmation != QMessageBox.Yes:
