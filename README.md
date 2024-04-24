@@ -209,7 +209,8 @@ and in the backend install 3 libraries to run the program:
 - `Microsoft.EntityFrameworkCore`
 - `Microsoft.EntityFrameworkCore.SqlServer`
 - `Microsoft.EntityFrameworkCore.Tools`
-> [!note] this is for `Windows` users, for `MacOs` users you'll need to use `SQLite` instead of `SQLServer` and you'll need to install the following libraries:
+> [!note]
+> this is for `Windows` users, for `MacOs` users you'll need to use `SQLite` instead of `SQLServer` and you'll need to install the following libraries:
 - `Microsoft.EntityFrameworkCore.Sqlite`
 
 
