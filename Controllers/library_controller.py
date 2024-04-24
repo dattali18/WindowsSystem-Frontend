@@ -1,6 +1,6 @@
 from typing import Optional
 
-from PySide6.QtWidgets import QTableWidgetItem
+from PySide6.QtWidgets import QTableWidgetItem, QMessageBox
 
 from .media_controller import MediaController
 from .create_library_controller import CreateLibraryController
@@ -56,6 +56,7 @@ class LibraryController:
         self.view.search_button.clicked.connect(self.handle_search)
         self.view.media_table.cellDoubleClicked.connect(self.handle_media_click)
         self.view.update_button.clicked.connect(self.handle_update)
+        self.view.delete_button.clicked.connect(self.handle_delete)
 
     def show(self) -> None:
         self.fetch_library()
@@ -123,4 +124,23 @@ class LibraryController:
             return
         self.create_library_controller.library_id = self.library_id
         self.create_library_controller.show()
+        self.view.close()
+
+    def handle_delete(self) -> None:
+        # TODO: ask for confirmation
+        confirmation = QMessageBox.question(
+            self.view,
+            "Delete Library",
+            "Are you sure you want to delete this library?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if confirmation != QMessageBox.Yes:
+            return
+
+        if self.library is None:
+            return
+
+        self.model.delete_libraries_id(self.library_id)
         self.view.close()

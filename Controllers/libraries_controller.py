@@ -1,6 +1,6 @@
 from typing import Optional
 
-from PySide6.QtWidgets import QTableWidgetItem
+from PySide6.QtWidgets import QTableWidgetItem, QMessageBox
 
 # for creating a new library
 from .create_library_controller import CreateLibraryController
@@ -68,17 +68,28 @@ class LibrariesController:
         self.populate_libraries_table()
 
     def handle_delete(self):
+        # TODO: ask the user with a dialog if they are sure they want to delete the library
+        confirmation = QMessageBox.question(
+            self.view,
+            "Delete Library",
+            "Are you sure you want to delete this library?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if confirmation != QMessageBox.Yes:
+            return
+
+        # User confirmed deletion, proceed with deleting the library
         selected_row: int = self.view.table_widget.currentRow()
         if selected_row == -1:
             print("No library selected")
             return
         library = self.libraries[selected_row]
-
         success: bool = self.model.delete_libraries_id(id=library.id)
         if not success:
             print("Error deleting library")
             return
-
         self.handle_search()
 
     def handle_create(self):
