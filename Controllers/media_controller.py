@@ -6,11 +6,17 @@ from typing import Optional
 from Views import MediaView
 from Models import MediaDto, ImageModel
 
+from PySide6.QtWidgets import (
+    QListWidgetItem,
+)
+
 
 class MediaController:
     def __init__(self, view: MediaView) -> None:
         self.view = view
         self.media: Optional[MediaDto] = None
+
+        self.view.ai_tags_button.clicked.connect(self.handle_ai_tags)
 
     def show(self) -> None:
         if not self.media:
@@ -56,3 +62,13 @@ class MediaController:
             poster="https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_SX300.jpg",
         )
         self.set_media()
+
+    def handle_ai_tags(self) -> None:
+        self.view.tags_list.clear()
+        image_bytes = ImageModel().get_image(url=self.media.poster)
+
+        image_tags = ImageModel().post_image(image=image_bytes)
+
+        for i in range(5):
+            item = QListWidgetItem(image_tags[i])
+            self.view.tags_list.addItem(item)

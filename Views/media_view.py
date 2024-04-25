@@ -22,6 +22,8 @@ from PySide6.QtWidgets import (
     QLabel,
     QHBoxLayout,
     QGroupBox,
+    QPushButton,
+    QListWidget,
 )
 
 from PySide6.QtCore import Qt
@@ -85,6 +87,14 @@ class MediaView(QMainWindow):
         self.media_image.setFixedSize(400, 480)
         # centering the image in the label
         self.h_layout.addWidget(self.media_image)
+
+        # button to triger Imagga
+        self.ai_tags_button = QPushButton("Generate AI Tags")
+        self.vertical_layout.addWidget(self.ai_tags_button)
+
+        self.tags_list = QListWidget()
+        self.tags_list.setFixedSize(800, 150)
+        self.vertical_layout.addWidget(self.tags_list)
 
         # setting up the main widget
         self.central_widget.setLayout(self.vertical_layout)
