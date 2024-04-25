@@ -19,11 +19,17 @@ class MediaController:
         self.view.ai_tags_button.clicked.connect(self.handle_ai_tags)
 
     def show(self) -> None:
+        self.view.tag1.hide()
+        self.view.tag2.hide()
+        self.view.tag3.hide()
+        
         if not self.media:
             self.create_dummy_data()
         else:
             self.set_media()
         self.view.show()
+
+        
 
     def set_media(self) -> None:
         if not self.media:
@@ -40,9 +46,9 @@ class MediaController:
         if not self.media:
             return
 
-        image = ImageModel().get_image(self.media.poster)
+        self.image: bytes = ImageModel().get_image(self.media.poster)
         pixmap = QPixmap()
-        pixmap.loadFromData(image)
+        pixmap.loadFromData(self.image)
         pixmap = pixmap.scaled(
             self.view.media_image.width(),
             self.view.media_image.height(),
@@ -64,11 +70,21 @@ class MediaController:
         self.set_media()
 
     def handle_ai_tags(self) -> None:
-        self.view.tags_list.clear()
-        image_bytes = ImageModel().get_image(url=self.media.poster)
+        image_tags: list[str] = ImageModel().post_image(image=self.image)
 
-        image_tags = ImageModel().post_image(image=image_bytes)
+        # take the 3 first tags
+        tag1, tag2, tag3 = "", "", ""
+        if len(image_tags) >= 1:
+            tag1 = image_tags[0]
+        if len(image_tags) >= 2:
+            tag2 = image_tags[1]
+        if len(image_tags) >= 3:
+            tag3 = image_tags[2]
 
-        for i in range(5):
-            item = QListWidgetItem(image_tags[i])
-            self.view.tags_list.addItem(item)
+        self.view.tag1.setText(tag1)
+        self.view.tag2.setText(tag2)
+        self.view.tag3.setText(tag3)
+
+        self.view.tag1.show()
+        self.view.tag2.show()
+        self.view.tag3.show()

@@ -12,6 +12,12 @@ VStack {
             Media_Imdb_Id
         }
     }
+    AI_Tags_button
+    HStack {
+        Tag1: QLabel
+        Tag2: QLabel
+        Tag3: QLabel
+    }
 }
 """
 
@@ -88,17 +94,43 @@ class MediaView(QMainWindow):
         # centering the image in the label
         self.h_layout.addWidget(self.media_image)
 
-        # button to triger Imagga
-        self.ai_tags_button = QPushButton("Generate AI Tags")
-        self.vertical_layout.addWidget(self.ai_tags_button)
-
-        self.tags_list = QListWidget()
-        self.tags_list.setFixedSize(800, 150)
-        self.vertical_layout.addWidget(self.tags_list)
-
         # setting up the main widget
         self.central_widget.setLayout(self.vertical_layout)
 
         self.vertical_layout.addLayout(self.h_layout)
+
+        # button to trigger Imagga
+        self.ai_tags_button = QPushButton("Generate AI Tags")
+        self.vertical_layout.addWidget(self.ai_tags_button)
+
+        # setting up the tags
+        self.tags_layout = QHBoxLayout()
+        self.vertical_layout.addLayout(self.tags_layout)
+
+        self.tag1 = QLabel("Tag 1")
+        self.tags_layout.addWidget(self.tag1)
+
+        self.tag2 = QLabel("Tag 2")
+        self.tags_layout.addWidget(self.tag2)
+
+        self.tag3 = QLabel("Tag 3")
+        self.tags_layout.addWidget(self.tag3)
+
+        # center the text in the tags
+        self.tag1.setAlignment(Qt.AlignCenter)
+        self.tag2.setAlignment(Qt.AlignCenter)
+        self.tag3.setAlignment(Qt.AlignCenter)
+
+        # make the text bigger & bolder
+        font = self.tag1.font()
+        font.setPointSize(18)
+        self.tag1.setFont(font)
+        self.tag2.setFont(font)
+        self.tag3.setFont(font)
+
+        # hide the tags initially
+        self.tag1.hide()
+        self.tag2.hide()
+        self.tag3.hide()
 
         self.setCentralWidget(self.central_widget)
