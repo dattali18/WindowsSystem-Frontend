@@ -10,21 +10,8 @@ from Controllers import MediaController
 from Views import MediaView
 
 
-# setting up a test for the media_controller
-
-def test_media_controller():
-    app = QApplication(sys.argv)
-
-    view = MediaView()
-    controller = MediaController(view, None)
-
-    controller.show()
-
-    sys.exit(app.exec())
-
-
-def main():
-    test_media_controller()
+def main() -> None:
+    print("Running main_test.py")
 
 
 if __name__ == "__main__":

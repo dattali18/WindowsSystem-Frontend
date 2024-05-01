@@ -60,9 +60,12 @@ class LibrariesController:
 
     def handle_search(self):
         search_term: str = self.view.search_bar.text()
-        # keywords = self.get_checked_keywords()
+        keywords = self.get_checked_keywords()
 
-        if search_term == "":
+        # if the user has checked any keywords, search by keywords
+        if keywords:
+            self.libraries = self.model.get_libraries_name_keywords(name=search_term, keywords=keywords)
+        elif search_term == "":
             self.libraries = self.model.get_libraries()
         else:
             self.libraries = self.model.get_libraries_name(name=search_term)
@@ -94,7 +97,7 @@ class LibrariesController:
         self.handle_search()
 
     def handle_create(self):
-        # will create and show a new create library controller
+        # will create and show a new create_library_controller
         self.create_library_controller.view.show()
 
     def handle_update(self):
@@ -108,7 +111,7 @@ class LibrariesController:
         self.update_library_controller.library_id = library.id
         self.update_library_controller.show()
 
-    def handle_click(self, row: int, column: int):
+    def handle_click(self, row: int, _: int):
         # will create and show a new library controller
         library = self.libraries[row]
 

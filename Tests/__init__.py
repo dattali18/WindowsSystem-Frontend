@@ -19,5 +19,6 @@ from .libraries_api_tests import (
     test_post_libraries_movies,
     test_post_libraries_tvseries,
     test_put_libraries_id,
+    test_get_libraries_name_keywords,
 )
 from .image_api_tests import test_get_image, test_post_image

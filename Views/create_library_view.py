@@ -73,11 +73,11 @@ class CreateLibraryView(QMainWindow):
         # setting up the layout for the group box
         self.group_box_layout = QVBoxLayout()
 
-        genre: list[str] = ["Horror", "Comedy",
+        genres: list[str] = ["Horror", "Comedy",
                             "Action", "Drama", "Romance", "Sci-Fi"]
 
-        # putting checkboxes in dict so it can be accessed later by the key
-        self.checkboxes_dict = {genre: QCheckBox(genre) for genre in genre}
+        # putting checkboxes in dict, so it can be accessed later by the key
+        self.checkboxes_dict = {genre: QCheckBox(genre) for genre in genres}
 
         for checkbox in self.checkboxes_dict.values():
             self.group_box_layout.addWidget(checkbox)

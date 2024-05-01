@@ -15,4 +15,4 @@ class GetLibraryDto:
         self.media = media
 
     def __repr__(self) -> str:
-        return f"CreateLibraryDto(id={self.id}, name={self.name}, keywords={self.keywords}, len(media)={len(self.media)})"
+        return f"GetLibraryDto(id={self.id}, name={self.name}, keywords={self.keywords}, len(media)={len(self.media)})"

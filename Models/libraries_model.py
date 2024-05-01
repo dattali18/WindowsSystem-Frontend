@@ -21,7 +21,6 @@ class LibrariesModel:
             in the database in a GetLibraryDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries"
         url = f"{self.BASE_URL}/Libraries"
         try:
             response = requests.get(url, timeout=5)
@@ -43,7 +42,6 @@ class LibrariesModel:
             with id=id in a GetLibraryDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
         url = f"{self.BASE_URL}/Libraries/{id}"
         try:
             response = requests.get(url, timeout=5)
@@ -65,7 +63,6 @@ class LibrariesModel:
             with id=id in a MediaDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/movies"
         url = f"{self.BASE_URL}/Libraries/{id}/movies"
 
         try:
@@ -89,7 +86,6 @@ class LibrariesModel:
             library with id=id in a MediaDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}/tvseries"
         url = f"{self.BASE_URL}/Libraries/{id}/tvseries"
         try:
             response = requests.get(url, timeout=5)
@@ -111,8 +107,31 @@ class LibrariesModel:
             in the database with name starting with name in a GetLibraryDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/search/{name}"
         url = f"{self.BASE_URL}/Libraries/search/{name}"
+
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                json_str = response.text
+                json_obj = json.loads(json_str)
+                return [GetLibraryDto(**obj) for obj in json_obj]
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        return None
+
+    def get_libraries_name_keywords(self, name: str, keywords: list[str]) -> Optional[list[GetLibraryDto]]:
+        """
+        GET - /api/Libraries/search/?name={name}&keywords={keywords}
+        Args:
+            name : str - the name of the library
+            keywords : str - the keywords to search for in the library
+        Returns:
+            Optional[list[GetLibraryDto]] - a list of all libraries
+            in the database with name starting with name in a GetLibraryDto format
+            None if response.status_code == 404
+        """
+        keywords = ",".join(keywords)
+        url = f"{self.BASE_URL}/Libraries/search?name={name}&keywords={keywords}"
 
         try:
             response = requests.get(url, timeout=5)
@@ -133,7 +152,6 @@ class LibrariesModel:
             Optional[GetLibraryDto] - a library object that was created
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries"
         url = f"{self.BASE_URL}/Libraries"
         data = library.__dict__
 
@@ -157,7 +175,6 @@ class LibrariesModel:
             Optional[MediaDto] - the movie object that was added to the library in MediaDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
         try:
@@ -182,7 +199,6 @@ class LibrariesModel:
             Optional[MediaDto] - the tvseries object that was added to the library in MediaDto format
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
         try:
@@ -204,7 +220,6 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleting else False
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/movies?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/movies?imdbID={imdbID}"
 
         try:
@@ -223,7 +238,6 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleting else False
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{library_id}/tvseries?imdbID={imdbID}"
         url = f"{self.BASE_URL}/Libraries/{library_id}/tvseries?imdbID={imdbID}"
 
         try:
@@ -246,7 +260,6 @@ class LibrariesModel:
             Optional[GetLibraryDto] - a library object that was changed
             None if response.status_code == 404
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries/{id}"
         url = f"{self.BASE_URL}/Libraries?id={id}"
         data = library.__dict__
 
@@ -268,7 +281,6 @@ class LibrariesModel:
         Returns:
             bool - True if the object was deleted else False
         """
-        # url = f"http://localhost:{self.PORT}/api/Libraries?id={id}"
         url = f"{self.BASE_URL}/Libraries?id={id}"
 
         try:

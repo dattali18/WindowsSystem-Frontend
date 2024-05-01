@@ -51,6 +51,17 @@ def test_get_libraries_name(name: str = "My") -> None:
             print(library)
 
 
+def test_get_libraries_name_keywords() -> None:
+    libraries: Optional[list[GetLibraryDto]] = libraries_model.get_libraries_name_keywords(
+        name="My", keywords=[]
+    )
+    if libraries is None:
+        print("There was an error")
+    else:
+        for library in libraries:
+            print(library)
+
+
 def test_post_libraries() -> None:
     library: CreateLibraryDto = CreateLibraryDto(
         name="My Library I", keywords=["Action, Sci Fi"]
