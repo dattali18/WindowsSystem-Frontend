@@ -98,7 +98,7 @@ class LibrariesController:
 
     def handle_create(self):
         # will create and show a new create_library_controller
-        self.create_library_controller.view.show()
+        self.create_library_controller.show()
 
     def handle_update(self):
         # getting the selected library

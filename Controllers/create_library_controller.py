@@ -22,12 +22,19 @@ class CreateLibraryController:
 
         self.update_library_controller = None
 
+
     def show(self) -> None:
         self.set_up_ui()
         self.view.show()
 
     def set_up_ui(self) -> None:
         if not self.library_id:
+            self.view.name_text.setText("")
+            # unchecked all the checkboxes
+
+            for checkbox in self.view.checkboxes_dict.values():
+                checkbox.setChecked(False)
+            
             return
 
         self.library: GetLibraryDto = self.model.get_library_id(id=self.library_id)
